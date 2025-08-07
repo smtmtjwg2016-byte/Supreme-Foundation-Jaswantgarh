@@ -279,13 +279,17 @@
                 // Since `no-cors` mode doesn't allow reading the server's response,
                 // we'll assume success if the fetch call doesn't throw a network error.
                 showModal('सफलता!', 'आपका डेटा Google Sheet में सफलतापूर्वक सेव हो गया है।', '✅');
-                form.reset(); // Reset the form after successful submission
-                // Resetting the date to today's date after form reset
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                installDateInput.value = `${yyyy}-${mm}-${dd}`;
+                
+                // Pop-up दिखाने के बाद, 100ms का छोटा सा विलंब जोड़ें ताकि यूजर मैसेज देख सके।
+                setTimeout(() => {
+                    form.reset(); // Reset the form after a small delay
+                    // Resetting the date to today's date after form reset
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    installDateInput.value = `${yyyy}-${mm}-${dd}`;
+                }, 100);
                 
             } catch (error) {
                 console.error('Error submitting form:', error);

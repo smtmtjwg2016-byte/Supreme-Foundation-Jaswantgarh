@@ -83,17 +83,10 @@
 
                     <!-- बोर्ड का मॉडल नंबर -->
                     <div>
-                        <label for="modelNumber" class="block text-sm font-medium text-gray-700">🧾 बोर्ड का मॉडल नंबर <span class="text-red-500">*</span></label>
-                        <input type="text" id="modelNumber" name="बोर्ड का मॉडल नंबर" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="मॉडल नंबर दर्ज करें">
+                        <label for="modelNumber" class="block text-sm font-medium text-gray-700">🧾 बोर्ड का मॉडल नंबर</label>
+                        <input type="text" id="modelNumber" name="बोर्ड का मॉडल नंबर" value="CYBERNETYX 65” A10 SMART PANEL +1 KV UPS" readonly class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-gray-100">
                     </div>
 
-                    <!-- मॉडल नंबर की फोटो -->
-                    <!-- Note: For simplicity, photo fields will not be handled by the script. They would require more complex server-side logic to upload files. We'll add a note for the user. -->
-                    <div>
-                        <label for="modelPhoto" class="block text-sm font-medium text-gray-700">📸 मॉडल नंबर की फोटो</label>
-                        <input type="file" id="modelPhoto" name="मॉडल नंबर की फोटो" accept="image/*" capture="camera" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    </div>
-                    
                     <!-- सीरियल नंबर -->
                     <div>
                         <label for="serialNumber" class="block text-sm font-medium text-gray-700">🔢 सीरियल नंबर <span class="text-red-500">*</span></label>
@@ -266,7 +259,6 @@
                 { id: 'district', label: 'जिला/तहसील' },
                 { id: 'school', label: 'विद्यालय' },
                 { id: 'installDate', label: 'इंस्टॉलेशन की तारीख' },
-                { id: 'modelNumber', label: 'बोर्ड का मॉडल नंबर' },
                 { id: 'serialNumber', label: 'सीरियल नंबर' },
                 { id: 'gpsLocation', label: 'GPS लोकेशन' }
             ];

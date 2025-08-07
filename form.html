@@ -206,6 +206,12 @@
 
         // 'लोकेशन पाएं' बटन पर क्लिक करने पर
         getGpsButton.addEventListener('click', () => {
+            // HTTPS प्रोटोकॉल के लिए चेक करें
+            if (window.location.protocol !== 'https:') {
+                showModal('त्रुटि!', 'GPS लोकेशन केवल सुरक्षित HTTPS कनेक्शन पर काम करती है। कृपया इस फॉर्म को एक लाइव वेबसाइट पर अपलोड करें।', '❌');
+                return;
+            }
+
             if (navigator.geolocation) {
                 getGpsButton.textContent = 'लोकेशन ले रहा है...';
                 getGpsButton.disabled = true;
@@ -258,9 +264,10 @@
             // A more complex setup is required for file uploads to Google Drive.
             
             try {
-                const response = await fetch(SCRIPT_URL, {
+                // Fetch call to send the data
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // जरूरी है क्योंकि यह एक क्रॉस-ओरिजिन रिक्वेस्ट है
+                    mode: 'no-cors', // Important for cross-origin requests
                     cache: 'no-cache',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -268,15 +275,16 @@
                     body: new URLSearchParams(data)
                 });
                 
+                // Since `no-cors` mode doesn't allow reading the server's response,
+                // we'll assume success if the fetch call doesn't throw a network error.
                 showModal('सफलता!', 'आपका डेटा Google Sheet में सफलतापूर्वक सेव हो गया है।', '✅');
-                form.reset(); // फॉर्म को रीसेट करें
-                window.addEventListener('DOMContentLoaded', () => {
-                    const today = new Date();
-                    const yyyy = today.getFullYear();
-                    const mm = String(today.getMonth() + 1).padStart(2, '0');
-                    const dd = String(today.getDate()).padStart(2, '0');
-                    installDateInput.value = `${yyyy}-${mm}-${dd}`;
-                });
+                form.reset(); // Reset the form after successful submission
+                // Resetting the date to today's date after form reset
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                installDateInput.value = `${yyyy}-${mm}-${dd}`;
                 
             } catch (error) {
                 console.error('Error submitting form:', error);

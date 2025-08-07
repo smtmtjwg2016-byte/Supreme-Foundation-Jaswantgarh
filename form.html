@@ -24,7 +24,8 @@
 <body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
 
     <!-- Modal for Messages -->
-    <div id="statusModal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
+    <!-- z-index: 50 जोड़ा गया ताकि यह सुनिश्चित हो सके कि यह हमेशा सबसे ऊपर दिखे। -->
+    <div id="statusModal" class="modal fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
         <div class="relative p-8 w-full max-w-sm m-auto bg-white rounded-xl shadow-lg">
             <div class="text-center">
                 <div id="modalIcon" class="mx-auto text-4xl mb-4"></div>

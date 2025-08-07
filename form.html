@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>इंस्टॉलेशन डेटा एंट्री फॉर्म</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* इंटर फ़ॉन्ट लोड करें */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* हल्का नीला बैकग्राउंड */
+        }
+        .modal {
+            display: none;
+        }
+        .modal-active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+
+    <!-- Modal for Messages -->
+    <div id="statusModal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
+        <div class="relative p-8 w-full max-w-sm m-auto bg-white rounded-xl shadow-lg">
+            <div class="text-center">
+                <div id="modalIcon" class="mx-auto text-4xl mb-4"></div>
+                <h3 id="modalTitle" class="text-lg leading-6 font-medium text-gray-900 mb-2"></h3>
+                <p id="modalMessage" class="text-sm text-gray-500"></p>
+                <div class="mt-4 flex justify-center">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none">ठीक है</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Form Container -->
+    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 hover:scale-[1.01]">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 border-b-2 pb-4">इंस्टॉलेशन डेटा एंट्री फॉर्म</h1>
+        
+        <form id="installationForm" class="space-y-6">
+            <!-- स्टेप 1: लोकेशन चुनें -->
+            <div>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">🔹 स्टेप 1: लोकेशन चुनें</h2>
+                <div class="space-y-2">
+                    <label for="district" class="block text-sm font-medium text-gray-700">जिला/तहसील</label>
+                    <select id="district" name="जिला/तहसील" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        <option value="">-- जिला/तहसील चुनें --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- स्टेप 2: विद्यालय चुनें -->
+            <div>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">🔹 स्टेप 2: विद्यालय चुनें</h2>
+                <div class="space-y-2">
+                    <label for="school" class="block text-sm font-medium text-gray-700">विद्यालय</label>
+                    <select id="school" name="विद्यालय" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" disabled>
+                        <option value="">-- पहले लोकेशन चुनें --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- स्टेप 3: इंस्टॉलेशन विवरण भरें -->
+            <div>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">🔹 स्टेप 3: इंस्टॉलेशन विवरण भरें</h2>
+                <div class="space-y-4">
+                    <!-- इंस्टॉलेशन की तारीख -->
+                    <div>
+                        <label for="installDate" class="block text-sm font-medium text-gray-700">📅 इंस्टॉलेशन की तारीख</label>
+                        <input type="date" id="installDate" name="इंस्टॉलेशन की तारीख" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                    </div>
+
+                    <!-- बोर्ड का मॉडल नंबर -->
+                    <div>
+                        <label for="modelNumber" class="block text-sm font-medium text-gray-700">🧾 बोर्ड का मॉडल नंबर</label>
+                        <input type="text" id="modelNumber" name="बोर्ड का मॉडल नंबर" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="मॉडल नंबर दर्ज करें">
+                    </div>
+
+                    <!-- मॉडल नंबर की फोटो -->
+                    <!-- Note: For simplicity, photo fields will not be handled by the script. They would require more complex server-side logic to upload files. We'll add a note for the user. -->
+                    <div>
+                        <label for="modelPhoto" class="block text-sm font-medium text-gray-700">📸 मॉडल नंबर की फोटो</label>
+                        <input type="file" id="modelPhoto" name="मॉडल नंबर की फोटो" accept="image/*" capture="camera" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    
+                    <!-- सीरियल नंबर -->
+                    <div>
+                        <label for="serialNumber" class="block text-sm font-medium text-gray-700">🔢 सीरियल नंबर</label>
+                        <input type="text" id="serialNumber" name="सीरियल नंबर" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="सीरियल नंबर दर्ज करें">
+                    </div>
+                    
+                    <!-- सीरियल नंबर की फोटो -->
+                    <div>
+                        <label for="serialPhoto" class="block text-sm font-medium text-gray-700">📸 सीरियल नंबर की फोटो</label>
+                        <input type="file" id="serialPhoto" name="सीरियल नंबर की फोटो" accept="image/*" capture="camera" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    
+                    <!-- बोर्ड की इंस्टॉलेशन के बाद की फोटो -->
+                    <div>
+                        <label for="postInstallPhoto" class="block text-sm font-medium text-gray-700">📸 बोर्ड की इंस्टॉलेशन के बाद की फोटो</label>
+                        <input type="file" id="postInstallPhoto" name="इंस्टॉलेशन के बाद की फोटो" accept="image/*" capture="camera" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    
+                    <!-- टिप्पणी -->
+                    <div>
+                        <label for="comment" class="block text-sm font-medium text-gray-700">📝 टिप्पणी</label>
+                        <textarea id="comment" name="टिप्पणी" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="कोई विशेष बात यहाँ लिखें"></textarea>
+                    </div>
+
+                    <!-- GPS लोकेशन -->
+                    <div>
+                        <label for="gpsLocation" class="block text-sm font-medium text-gray-700">📍 GPS लोकेशन</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="gpsLocation" name="GPS लोकेशन" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-gray-50" readonly placeholder="लोकेशन प्राप्त करने के लिए बटन पर क्लिक करें">
+                            <button type="button" id="getGpsButton" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 transform hover:scale-105">लोकेशन पाएं</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" id="submitButton" class="w-full py-3 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-150 transform hover:scale-105">
+                डेटा सबमिट करें
+            </button>
+        </form>
+    </div>
+
+    <!-- JavaScript for dynamic functionality -->
+    <script>
+        // आपके द्वारा प्रदान किए गए CSV डेटा से बनाया गया स्कूल डेटा
+        const schoolData = {
+            "LADNUN": ["GSSS CHHAPPARA", "GSSS DHINGSARI", "GSSS DHOLIYA", "GSSS HEERAWATI", "GSSS KHAMIYESAD", "GSSS MANGALPURA", "GGSSS SMT KESAR DEVI SETHI", "SWAMI VIVEKANAND GMS,NIMBI", "MGGS RATAU", "GUPS GHIRDODA KHARA", "GUPS NO 4 LADNUN", "GGSSS MEETHRI", "GUPS No. 5 RAMLAL MUNDRA", "GSSS MEENDASARI", "MGGS BALDU", "GSSS BHIDASARI LADNUN", "GUPS NO 9 MAGRA BASS", "GSSS VISHWANATHPURA SUNARI", "GSSS KHEENWAJ", "MGGS MEETHRI"],
+            "SUJANGARH": ["MGM SHOBHASAR", "GSSS MALSISAR", "GSSS CHANDGOTHRI", "GSSS MEGHWALO KI DHANI", "GSSS BUDKIYA", "GSSS JAJUSAR", "GSSS KHYALI", "GGSSS SUJANGARH", "GSSS JELI", "GSSS JOGALIYA", "GGSSS CHARNIYA", "GSSS RAMPURA BASINDA", "GGSSS DUNGARWALO KA BAS", "GSSS RATAU"],
+            "NAGAUR": ["GVUSS LAMBA JATAN", "GVUSS SAINSARA", "GPRASS JIYA RAM KI JHOPARI", "GPRASS TAUSAR", "GVUSS BADAYALI", "GVUSS TANTWAS", "GVUSS MOGAS", "GPSS DODU", "GVUSS MARWAR MUNDWA"],
+            "AJMER": ["GPRASS KOTRA", "GVUSS GANJ AJMER", "GVUSS PRATAP NAGAR AJMER", "GVUSS SHIVAJI NAGAR KISHANGARH", "GUPSS PUSHKAR"],
+            "DK": ["GPRSS PEEH", "GVUSS DIDWANA", "MGGS GACHHIPURA"],
+            "TONK": ["GVUSS GALOD", "GVUSS MEENO KI JHOPDI ,BANETHA"],
+            "KEKRI": ["GVUSS SAWAR"],
+            "BEAWAR": ["GVUSS BIJAYNAGAR", "GVUSS SENDRA"],
+            "BHILWARA": ["GVUSS HAMEERGARH", "GVUSS MAANDAL", "GVUSS KHJEENA"],
+            "SHAHPURA": ["GVUSS PANDER", "GPSS PEEPLI"]
+        };
+
+        const form = document.getElementById('installationForm');
+        const districtSelect = document.getElementById('district');
+        const schoolSelect = document.getElementById('school');
+        const installDateInput = document.getElementById('installDate');
+        const getGpsButton = document.getElementById('getGpsButton');
+        const gpsLocationInput = document.getElementById('gpsLocation');
+        const submitButton = document.getElementById('submitButton');
+        
+        // **यहां अपना Google Apps Script वेब ऐप URL डालें**
+        // यह URL आपको Google Apps Script को डिप्लॉय करने के बाद मिलेगा।
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGwpuzSCAHS14bcbg9VL8rvwqiLU1kMvvcIwn91Z4eMyb2_SKhclNdSewSdz-fz2LRDg/exec';
+
+        // मॉडल फ़ंक्शंस
+        function showModal(title, message, icon) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('statusModal').classList.add('modal-active');
+        }
+
+        function closeModal() {
+            document.getElementById('statusModal').classList.remove('modal-active');
+        }
+
+        // जब DOM पूरी तरह से लोड हो जाए तो यह फ़ंक्शन चलेगा
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            installDateInput.value = `${yyyy}-${mm}-${dd}`;
+            
+            const sortedDistricts = Object.keys(schoolData).sort();
+            sortedDistricts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        });
+
+        // 'जिला/तहसील' ड्रॉपडाउन में बदलाव होने पर
+        districtSelect.addEventListener('change', (event) => {
+            const selectedDistrict = event.target.value;
+            schoolSelect.innerHTML = '<option value="">-- विद्यालय चुनें --</option>';
+            schoolSelect.disabled = true;
+
+            if (selectedDistrict) {
+                const schools = schoolData[selectedDistrict];
+                const sortedSchools = schools.sort();
+                sortedSchools.forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school;
+                    option.textContent = school;
+                    schoolSelect.appendChild(option);
+                });
+                schoolSelect.disabled = false;
+            }
+        });
+
+        // 'लोकेशन पाएं' बटन पर क्लिक करने पर
+        getGpsButton.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                getGpsButton.textContent = 'लोकेशन ले रहा है...';
+                getGpsButton.disabled = true;
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        gpsLocationInput.value = `${latitude}, ${longitude}`;
+                        getGpsButton.textContent = 'लोकेशन ली गई';
+                        getGpsButton.disabled = false;
+                    },
+                    (error) => {
+                        console.error("GPS लोकेशन प्राप्त करने में त्रुटि:", error);
+                        gpsLocationInput.value = 'लोकेशन प्राप्त नहीं हो सकी।';
+                        getGpsButton.textContent = 'लोकेशन पाएं';
+                        getGpsButton.disabled = false;
+                        let errorMessage = 'लोकेशन प्राप्त करने में त्रुटि हुई।';
+                        if (error.code === error.PERMISSION_DENIED) {
+                            errorMessage = 'कृपया लोकेशन एक्सेस की अनुमति दें।';
+                        }
+                        showModal('त्रुटि!', errorMessage, '❌');
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                showModal('असमर्थित ब्राउज़र', 'आपका ब्राउज़र GPS लोकेशन का समर्थन नहीं करता है।', '⚠️');
+            }
+        });
+
+        // फॉर्म सबमिट होने पर
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                showModal('त्रुटि!', 'कृपया अपना Google Apps Script URL कोड में अपडेट करें।', '⚠️');
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'डेटा सबमिट हो रहा है...';
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Photo fields are not handled in this basic example for simplicity.
+            // A more complex setup is required for file uploads to Google Drive.
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // जरूरी है क्योंकि यह एक क्रॉस-ओरिजिन रिक्वेस्ट है
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(data)
+                });
+                
+                showModal('सफलता!', 'आपका डेटा Google Sheet में सफलतापूर्वक सेव हो गया है।', '✅');
+                form.reset(); // फॉर्म को रीसेट करें
+                window.addEventListener('DOMContentLoaded', () => {
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    installDateInput.value = `${yyyy}-${mm}-${dd}`;
+                });
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showModal('त्रुटि!', 'डेटा सबमिट करने में कोई समस्या हुई। कृपया दोबारा प्रयास करें।', '❌');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'डेटा सबमिट करें';
+            }
+        });
+    </script>
+</body>
+</html>

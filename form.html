@@ -11,7 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* हल्का नीला बैकग्राउंड */
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); /* नया आकर्षक बैकग्राउंड */
         }
         .modal {
             display: none;
@@ -21,14 +21,20 @@
         }
     </style>
 </head>
-<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+<body class="p-4 md:p-8 flex flex-col items-center justify-center min-h-screen">
+
+    <!-- नए जोड़े गए शीर्षक -->
+    <div class="text-center mb-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg">सुप्रीम फाउण्डेशन जसवन्तगढ</h1>
+        <h2 class="text-xl md:text-2xl font-semibold text-white drop-shadow-md mt-2">डिजिटल बोर्ड वितरण फार्म</h2>
+    </div>
 
     <!-- Modal for Messages -->
     <!-- z-index: 50 जोड़ा गया ताकि यह सुनिश्चित हो सके कि यह हमेशा सबसे ऊपर दिखे। -->
     <div id="statusModal" class="modal fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
-        <div class="relative p-8 w-full max-w-sm m-auto bg-white rounded-xl shadow-lg">
+        <div class="relative p-8 w-full max-w-sm m-auto bg-white rounded-xl shadow-lg transform transition-all duration-300 scale-100">
             <div class="text-center">
-                <div id="modalIcon" class="mx-auto text-4xl mb-4"></div>
+                <div id="modalIcon" class="mx-auto text-4xl mb-4 animate-bounce"></div>
                 <h3 id="modalTitle" class="text-lg leading-6 font-medium text-gray-900 mb-2"></h3>
                 <p id="modalMessage" class="text-sm text-gray-500"></p>
                 <div class="mt-4 flex justify-center">
@@ -47,7 +53,7 @@
             <div>
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">🔹 स्टेप 1: लोकेशन चुनें</h2>
                 <div class="space-y-2">
-                    <label for="district" class="block text-sm font-medium text-gray-700">जिला/तहसील</label>
+                    <label for="district" class="block text-sm font-medium text-gray-700">जिला/तहसील <span class="text-red-500">*</span></label>
                     <select id="district" name="जिला/तहसील" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         <option value="">-- जिला/तहसील चुनें --</option>
                     </select>
@@ -58,7 +64,7 @@
             <div>
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">🔹 स्टेप 2: विद्यालय चुनें</h2>
                 <div class="space-y-2">
-                    <label for="school" class="block text-sm font-medium text-gray-700">विद्यालय</label>
+                    <label for="school" class="block text-sm font-medium text-gray-700">विद्यालय <span class="text-red-500">*</span></label>
                     <select id="school" name="विद्यालय" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" disabled>
                         <option value="">-- पहले लोकेशन चुनें --</option>
                     </select>
@@ -71,13 +77,13 @@
                 <div class="space-y-4">
                     <!-- इंस्टॉलेशन की तारीख -->
                     <div>
-                        <label for="installDate" class="block text-sm font-medium text-gray-700">📅 इंस्टॉलेशन की तारीख</label>
+                        <label for="installDate" class="block text-sm font-medium text-gray-700">📅 इंस्टॉलेशन की तारीख <span class="text-red-500">*</span></label>
                         <input type="date" id="installDate" name="इंस्टॉलेशन की तारीख" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                     </div>
 
                     <!-- बोर्ड का मॉडल नंबर -->
                     <div>
-                        <label for="modelNumber" class="block text-sm font-medium text-gray-700">🧾 बोर्ड का मॉडल नंबर</label>
+                        <label for="modelNumber" class="block text-sm font-medium text-gray-700">🧾 बोर्ड का मॉडल नंबर <span class="text-red-500">*</span></label>
                         <input type="text" id="modelNumber" name="बोर्ड का मॉडल नंबर" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="मॉडल नंबर दर्ज करें">
                     </div>
 
@@ -90,7 +96,7 @@
                     
                     <!-- सीरियल नंबर -->
                     <div>
-                        <label for="serialNumber" class="block text-sm font-medium text-gray-700">🔢 सीरियल नंबर</label>
+                        <label for="serialNumber" class="block text-sm font-medium text-gray-700">🔢 सीरियल नंबर <span class="text-red-500">*</span></label>
                         <input type="text" id="serialNumber" name="सीरियल नंबर" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" placeholder="सीरियल नंबर दर्ज करें">
                     </div>
                     
@@ -114,7 +120,7 @@
 
                     <!-- GPS लोकेशन -->
                     <div>
-                        <label for="gpsLocation" class="block text-sm font-medium text-gray-700">📍 GPS लोकेशन</label>
+                        <label for="gpsLocation" class="block text-sm font-medium text-gray-700">📍 GPS लोकेशन <span class="text-red-500">*</span></label>
                         <div class="flex space-x-2">
                             <input type="text" id="gpsLocation" name="GPS लोकेशन" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-gray-50" readonly placeholder="लोकेशन प्राप्त करने के लिए बटन पर क्लिक करें">
                             <button type="button" id="getGpsButton" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 transform hover:scale-105">लोकेशन पाएं</button>
@@ -254,6 +260,33 @@
                 showModal('त्रुटि!', 'कृपया अपना Google Apps Script URL कोड में अपडेट करें।', '⚠️');
                 return;
             }
+
+            // सभी आवश्यक फ़ील्ड की जांच करें
+            const requiredFields = [
+                { id: 'district', label: 'जिला/तहसील' },
+                { id: 'school', label: 'विद्यालय' },
+                { id: 'installDate', label: 'इंस्टॉलेशन की तारीख' },
+                { id: 'modelNumber', label: 'बोर्ड का मॉडल नंबर' },
+                { id: 'serialNumber', label: 'सीरियल नंबर' },
+                { id: 'gpsLocation', label: 'GPS लोकेशन' }
+            ];
+
+            let isFormValid = true;
+            let missingFields = [];
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!element.value) {
+                    isFormValid = false;
+                    missingFields.push(field.label);
+                }
+            });
+
+            // अगर फॉर्म में कोई भी फ़ील्ड खाली है तो एरर दिखाएं
+            if (!isFormValid) {
+                showModal('अधूरा फॉर्म!', `कृपया सभी आवश्यक जानकारी भरें: ${missingFields.join(', ')}`, '⚠️');
+                return;
+            }
+
 
             submitButton.disabled = true;
             submitButton.textContent = 'डेटा सबमिट हो रहा है...';

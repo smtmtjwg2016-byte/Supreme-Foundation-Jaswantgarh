@@ -11,7 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); /* नया आकर्षक बैकग्राउंड */
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
         }
         .modal {
             display: none;
@@ -30,12 +30,11 @@
     </div>
 
     <!-- Modal for Messages -->
-    <!-- z-index: 50 जोड़ा गया ताकि यह सुनिश्चित हो सके कि यह हमेशा सबसे ऊपर दिखे। -->
     <div id="statusModal" class="modal fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
         <div class="relative p-8 w-full max-w-sm m-auto bg-white rounded-xl shadow-lg transform transition-all duration-300 scale-100">
             <div class="text-center">
                 <div id="modalIcon" class="mx-auto text-4xl mb-4 animate-bounce"></div>
-                <h3 id="modalTitle" class="text-lg leading-6 font-medium text-gray-900 mb-2"></h3>
+                <h3 id="modalTitle" class-="text-lg leading-6 font-medium text-gray-900 mb-2"></h3>
                 <p id="modalMessage" class="text-sm text-gray-500"></p>
                 <div class="mt-4 flex justify-center">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none">ठीक है</button>
@@ -152,9 +151,8 @@
         const gpsLocationInput = document.getElementById('gpsLocation');
         const submitButton = document.getElementById('submitButton');
         
-        // **यहां अपना Google Apps Script वेब ऐप URL डालें**
-        // यह URL आपको Google Apps Script को डिप्लॉय करने के बाद मिलेगा।
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGwpuzSCAHS14bcbg9VL8rvwqiLU1kMvvcIwn91Z4eMyb2_SKhclNdSewSdz-fz2LRDg/exec';
+        // **यहां आपका नया Google Apps Script वेब ऐप URL है**
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaJRU5-pCspeHBLI3OMUlWBbJHdLi1iwGy1grAO8n8Oatp5x6bB9msdfoZjsYL1jV1ig/exec';
 
         // मॉडल फ़ंक्शंस
         function showModal(title, message, icon) {
@@ -284,21 +282,18 @@
             submitButton.textContent = 'डेटा सबमिट हो रहा है...';
 
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
             
             // Photo fields are not handled in this basic example for simplicity.
             // A more complex setup is required for file uploads to Google Drive.
             
             try {
                 // Fetch call to send the data
+                // फ़ोटो फ़ाइलें भेजने के लिए formData को सीधे भेजें
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors', // Important for cross-origin requests
                     cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(data)
+                    body: formData // यहाँ formData को सीधे भेजा गया है
                 });
                 
                 // Since `no-cors` mode doesn't allow reading the server's response,
@@ -327,4 +322,3 @@
     </script>
 </body>
 </html>
-

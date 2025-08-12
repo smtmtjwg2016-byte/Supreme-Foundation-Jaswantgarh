@@ -1,5 +1,5 @@
 <index html>
-<html lang="hi">
+html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,9 +17,8 @@
         }
         .container {
             background-color: #ffffff;
-            /* Added min-h-screen and a more flexible approach to prevent overflow */
             max-width: 900px;
-            min-height: 100vh; /* Ensures the container takes up at least the full viewport height */
+            min-height: 100vh;
             padding-top: 1rem;
             padding-bottom: 1rem;
         }
@@ -30,7 +29,6 @@
         .header-bg {
             background-image: linear-gradient(to right, #4c51bf, #6b46c1); /* Vibrant indigo-purple gradient */
         }
-        /* Adjusted the main body padding for better fit on all screens */
         body.p-4 {
             padding: 1rem;
         }
@@ -39,7 +37,7 @@
 <body class="p-4 flex items-center justify-center min-h-screen">
 
     <div class="container mx-auto p-8 rounded-2xl shadow-2xl border-4 border-white">
-        <!-- Header Section with Centered Text (Logo removed) -->
+        <!-- Header Section with Centered Text -->
         <div class="header-bg p-6 rounded-t-xl -mt-8 -mx-8 shadow-inner flex flex-col items-center justify-center text-center">
             
             <h1 class="text-3xl md:text-4xl font-bold mb-1 text-white">सुप्रीम फाउण्डेशन जसवन्तगढ</h1>
@@ -125,8 +123,8 @@
     </div>
 
     <script>
-        // Google Apps Script Web App URL को यहां अपडेट करें।
-        // इसे डिप्लॉय करने के बाद आपको यह URL मिलेगी।
+        // Google Apps Script Web App URL को यहां अपडेट किया गया है।
+        // यह वह URL है जो आपको Apps Script को deploy करने के बाद मिली थी।
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysUHAkX3D3Vg95muG2pDnJMR4K7By_4UxhNGmz4yFy-yPcmTAS2vl7nldP9YmQz3V1/exec';
 
         // JSON फ़ाइल से प्राप्त डेटा को सीधे कोड में शामिल किया गया है
@@ -639,7 +637,7 @@
             e.preventDefault();
             
             // जांचें कि Google Apps Script URL सेट है या नहीं।
-            if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' || !SCRIPT_URL) {
+            if (!SCRIPT_URL) {
                 showMessage("कृपया Google Apps Script URL को अपडेट करें।", "bg-red-100 text-red-700");
                 return;
             }

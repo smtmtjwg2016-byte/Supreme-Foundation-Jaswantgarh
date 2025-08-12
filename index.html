@@ -1,4 +1,4 @@
-<index.html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,11 @@
         }
         .container {
             background-color: #ffffff;
+            /* Added min-h-screen and a more flexible approach to prevent overflow */
             max-width: 900px;
+            min-height: 100vh; /* Ensures the container takes up at least the full viewport height */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
         .input-field {
             width: 100%;
@@ -25,6 +29,10 @@
         }
         .header-bg {
             background-image: linear-gradient(to right, #4c51bf, #6b46c1); /* Vibrant indigo-purple gradient */
+        }
+        /* Adjusted the main body padding for better fit on all screens */
+        body.p-4 {
+            padding: 1rem;
         }
     </style>
 </head>
@@ -119,7 +127,7 @@
     <script>
         // Google Apps Script Web App URL को यहां अपडेट करें।
         // इसे डिप्लॉय करने के बाद आपको यह URL मिलेगी।
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysUHAkX3D3Vg95muG2pDnJMR4K7By_4UxhNGmz4yFy-yPcmTAS2vl7nldP9YmQz3V1/exec'; // <--- यहां अपनी URL पेस्ट करें
+        const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // <--- यहां अपनी URL पेस्ट करें
 
         // JSON फ़ाइल से प्राप्त डेटा को सीधे कोड में शामिल किया गया है
         const locationsAndSchools = JSON.parse(`{
@@ -714,4 +722,3 @@
     </script>
 </body>
 </html>
-

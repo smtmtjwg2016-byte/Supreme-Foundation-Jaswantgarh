@@ -1,722 +1,431 @@
 <index html>
-html lang="hi">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>नामांकन फार्म 2025-26</title>
-    <!-- Tailwind CSS CDN -->
+    <title>छात्र संख्या फॉर्म</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #e2e8f0; /* Light blue-gray background */
-        }
-        .container {
-            background-color: #ffffff;
-            max-width: 900px;
-            min-height: 100vh;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-        .input-field {
-            width: 100%;
-            text-align: center;
-        }
-        .header-bg {
-            background-image: linear-gradient(to right, #4c51bf, #6b46c1); /* Vibrant indigo-purple gradient */
-        }
-        body.p-4 {
-            padding: 1rem;
+        .container { max-width: 900px; }
+        .input-group { display: flex; gap: 0.5rem; }
+        .input-group input { text-align: center; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 768px) {
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
     </style>
 </head>
-<body class="p-4 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 text-gray-800 font-sans p-4">
 
-    <div class="container mx-auto p-8 rounded-2xl shadow-2xl border-4 border-white">
-        <!-- Header Section with Centered Text -->
-        <div class="header-bg p-6 rounded-t-xl -mt-8 -mx-8 shadow-inner flex flex-col items-center justify-center text-center">
-            
-            <h1 class="text-3xl md:text-4xl font-bold mb-1 text-white">सुप्रीम फाउण्डेशन जसवन्तगढ</h1>
-            <h2 class="text-xl md:text-2xl font-semibold text-white/90">नामांकन फार्म 2025-26</h2>
-        </div>
-        
-        <!-- Google Apps Script URL को यहां जोड़ें -->
-        <form id="dataEntryForm" class="mt-8">
-            <!-- Step 1: Location Dropdown -->
-            <div class="mb-6">
-                <label for="location" class="block text-gray-800 font-bold mb-2 text-lg">
-                    🔹 चरण 1: लोकेशन चुनें
-                </label>
-                <select id="location" name="location" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-4 focus:ring-indigo-200 focus:border-indigo-500 transition duration-200">
-                    <option value="" disabled selected>जिला/तहसील चुनें</option>
-                </select>
-            </div>
+    <div class="container mx-auto bg-white shadow-xl rounded-xl p-8 my-8">
+        <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">छात्र संख्या फॉर्म</h1>
 
-            <!-- Step 2: School Dropdown -->
-            <div class="mb-6">
-                <label for="school" class="block text-gray-800 font-bold mb-2 text-lg">
-                    🔹 चरण 2: विद्यालय चुनें
-                </label>
-                <select id="school" name="school" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl shadow-sm bg-gray-100" disabled>
-                    <option value="" disabled selected>पहले लोकेशन चुनें</option>
-                </select>
-            </div>
+        <form id="studentCountForm" action="https://script.google.com/macros/s/AKfycbxfevqAknBhCjLO4EPJ1SbsbyD1raZf8NODHN4uik5ufRQ20OABd-hizpNqIw54k7xM/exec" method="post" class="space-y-6">
 
-            <!-- Volunteer Details -->
-            <div class="mb-6 border-t-2 border-indigo-200 pt-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">स्वयंसेवक विवरण</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="date" class="block text-gray-700 font-medium mb-1">दिनांक</label>
-                        <input type="date" id="date" name="date" class="w-full px-4 py-2 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" required>
-                    </div>
-                    <div>
-                        <label for="srNumber" class="block text-gray-700 font-medium mb-1">एस आर नम्बर</label>
-                        <input type="text" id="srNumber" name="srNumber" class="w-full px-4 py-2 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="एस आर नम्बर दर्ज करें" required>
-                    </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700 mb-1">स्थान</label>
+                    <input type="text" id="location" name="location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="volunteerName" class="block text-gray-700 font-medium mb-1">भरने वाले स्वयंसेवक का नाम</label>
-                        <input type="text" id="volunteerName" name="volunteerName" class="w-full px-4 py-2 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="नाम दर्ज करें" required>
-                    </div>
-                    <div>
-                        <label for="mobileNumber" class="block text-gray-700 font-medium mb-1">मोबाइल नम्बर</label>
-                        <input type="tel" id="mobileNumber" name="mobileNumber" class="w-full px-4 py-2 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="मोबाइल नम्बर दर्ज करें" pattern="[0-9]{10}" title="कृपया 10 अंकों का मोबाइल नंबर दर्ज करें" required>
-                    </div>
+                <div>
+                    <label for="school" class="block text-sm font-medium text-gray-700 mb-1">विद्यालय का नाम</label>
+                    <input type="text" id="school" name="school" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
                 </div>
-                <div class="mt-4">
-                    <label for="workingVolunteers" class="block text-gray-700 font-medium mb-1">कार्यरत स्वयंसेवकों के नाम</label>
-                    <textarea id="workingVolunteers" name="workingVolunteers" rows="3" class="w-full px-4 py-2 border-2 border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="यहां नाम दर्ज करें (एक से अधिक होने पर कॉमा से अलग करें)"></textarea>
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">दिनांक</label>
+                    <input type="date" id="date" name="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="srNumber" class="block text-sm font-medium text-gray-700 mb-1">एसआर नंबर</label>
+                    <input type="text" id="srNumber" name="srNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="volunteerName" class="block text-sm font-medium text-gray-700 mb-1">स्वयंसेवक का नाम</label>
+                    <input type="text" id="volunteerName" name="volunteerName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="mobileNumber" class="block text-sm font-medium text-gray-700 mb-1">मोबाइल नंबर</label>
+                    <input type="tel" id="mobileNumber" name="mobileNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="workingVolunteers" class="block text-sm font-medium text-gray-700 mb-1">कार्यरत स्वयंसेवक</label>
+                    <input type="number" id="workingVolunteers" name="workingVolunteers" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" min="0" required>
                 </div>
             </div>
 
-            <!-- Data Entry Table -->
-            <div class="overflow-x-auto rounded-xl shadow-lg border-2 border-gray-200">
-                <table class="min-w-full bg-white text-center">
-                    <thead class="bg-indigo-600 text-white">
-                        <tr>
-                            <th class="py-3 px-2 border-r border-indigo-700">कक्षा</th>
-                            <th class="py-3 px-2 border-r border-indigo-700">लड़के (B)</th>
-                            <th class="py-3 px-2 border-r border-indigo-700">लड़कियाँ (G)</th>
-                            <th class="py-3 px-2">कुल (T)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTableBody" class="divide-y divide-gray-200">
-                        <!-- Table rows will be added here by JavaScript -->
-                    </tbody>
-                </table>
+            <hr class="my-6 border-gray-300">
+
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-center text-indigo-600">कक्षा के अनुसार छात्र संख्या</h2>
+                
+                <div class="grid gap-4">
+                    <!-- Class Nursery -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">नर्सरी</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-नर्सरी" name="boys-नर्सरी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('नर्सरी')">
+                            </div>
+                            <div>
+                                <label for="girls-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-नर्सरी" name="girls-नर्सरी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('नर्सरी')">
+                            </div>
+                            <div>
+                                <label for="total-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-नर्सरी" name="total-नर्सरी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class LKG -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">एलकेजी</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-एलकेजी" name="boys-एलकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('एलकेजी')">
+                            </div>
+                            <div>
+                                <label for="girls-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-एलकेजी" name="girls-एलकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('एलकेजी')">
+                            </div>
+                            <div>
+                                <label for="total-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-एलकेजी" name="total-एलकेजी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class UKG -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">यूकेजी</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-यूकेजी" name="boys-यूकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('यूकेजी')">
+                            </div>
+                            <div>
+                                <label for="girls-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-यूकेजी" name="girls-यूकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('यूकेजी')">
+                            </div>
+                            <div>
+                                <label for="total-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-यूकेजी" name="total-यूकेजी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 1 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 1</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 1" name="boys-कक्षा 1" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 1')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 1" name="girls-कक्षा 1" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 1')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 1" name="total-कक्षा 1" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class 2 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 2</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 2" name="boys-कक्षा 2" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 2')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 2" name="girls-कक्षा 2" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 2')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 2" name="total-कक्षा 2" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 3 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 3</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 3" name="boys-कक्षा 3" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 3')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 3" name="girls-कक्षा 3" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 3')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 3" name="total-कक्षा 3" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 4 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 4</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 4" name="boys-कक्षा 4" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 4')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 4" name="girls-कक्षा 4" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 4')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 4" name="total-कक्षा 4" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 5 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 5</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 5" name="boys-कक्षा 5" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 5')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 5" name="girls-कक्षा 5" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 5')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 5" name="total-कक्षा 5" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 6 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 6</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 6" name="boys-कक्षा 6" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 6')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 6" name="girls-कक्षा 6" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 6')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 6" name="total-कक्षा 6" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 7 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 7</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 7" name="boys-कक्षा 7" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 7')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 7" name="girls-कक्षा 7" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 7')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 7" name="total-कक्षा 7" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 8 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 8</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 8" name="boys-कक्षा 8" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 8')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 8" name="girls-कक्षा 8" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 8')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 8" name="total-कक्षा 8" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class 9 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 9</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 9" name="boys-कक्षा 9" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 9')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 9" name="girls-कक्षा 9" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 9')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 9" name="total-कक्षा 9" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class 10 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 10</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 10" name="boys-कक्षा 10" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 10')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 10" name="girls-कक्षा 10" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 10')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 10" name="total-कक्षा 10" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 11 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 11</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 11" name="boys-कक्षा 11" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 11')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 11" name="girls-कक्षा 11" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 11')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 11" name="total-कक्षा 11" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Class 12 -->
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <h3 class="font-bold mb-2">कक्षा 12</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="boys-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
+                                <input type="number" id="boys-कक्षा 12" name="boys-कक्षा 12" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 12')">
+                            </div>
+                            <div>
+                                <label for="girls-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
+                                <input type="number" id="girls-कक्षा 12" name="girls-कक्षा 12" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 12')">
+                            </div>
+                            <div>
+                                <label for="total-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
+                                <input type="number" id="total-कक्षा 12" name="total-कक्षा 12" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div id="messageBox" class="mt-6 p-4 bg-green-100 text-green-700 rounded-xl hidden"></div>
-            
+
+            <hr class="my-6 border-gray-300">
+
+            <!-- Grand Totals -->
+            <div class="bg-indigo-100 p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl font-bold text-indigo-800 mb-4">कुल योग</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="grandTotalBoys" class="block text-sm font-medium text-indigo-700 mb-1">कुल लड़के</label>
+                        <input type="number" id="grandTotalBoys" name="grandTotalBoys" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+                    </div>
+                    <div>
+                        <label for="grandTotalGirls" class="block text-sm font-medium text-indigo-700 mb-1">कुल लड़कियाँ</label>
+                        <input type="number" id="grandTotalGirls" name="grandTotalGirls" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+                    </div>
+                    <div>
+                        <label for="grandTotal" class="block text-sm font-medium text-indigo-700 mb-1">महायोग</label>
+                        <input type="number" id="grandTotal" name="grandTotal" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex justify-center mt-8">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-                    डेटा सबमिट करें
+                <button type="submit" class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-lg">
+                    सबमिट करें
                 </button>
             </div>
+            
         </form>
     </div>
 
     <script>
-        // Google Apps Script Web App URL को यहां अपडेट किया गया है।
-        // यह वह URL है जो आपको Apps Script को deploy करने के बाद मिली थी।
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysUHAkX3D3Vg95muG2pDnJMR4K7By_4UxhNGmz4yFy-yPcmTAS2vl7nldP9YmQz3V1/exec';
-
-        // JSON फ़ाइल से प्राप्त डेटा को सीधे कोड में शामिल किया गया है
-        const locationsAndSchools = JSON.parse(`{
-            "AJMER": [
-                "AJ01 GVUSS GANJ AJMER", "AJ02 GVUSS NASIRABAD", "AJ03 GVUSS PUSKAR", "AJ04 GVUSS SHIVAJI NAGAR, KISHANGARH",
-                "AJ05 GPRA.SS BAGHSURI, AJMER", "AJ06 GPRA.SS DASUK", "AJ07 GPRA.SS KHERA SHRINAGAR", "AJ08 GPRASS GASVA DHANI SURSURA",
-                "AJ09 GPRASS KOTADA AJMER", "AJ10 GUPSS DUKYO KI DHANI", "AJ11 GUPSS GOTHIYANA", "AJ12 GVUSS MAHARANA PRATAP NAGAR, AJMER",
-                "AJ13 GUPSS SALEMABAD", "AJ14 GUPSS PUSHKAR", "AJ15 GPS KRISHNAPURI", "AJ16 GPSS MANGLIYAWAS",
-                "AJ17 GPSS GOVINDGARH", "AJ18 GPSS MEHANAT NAGAR, KISHANGARH", "AJ19 GPSS PISANGAN", "AJ20 GPSS RUPANGARH",
-                "AJ21 GPSS KARKEDI", "AJ22 SANSKRIT DIVISION OFFICE AJMER"
-            ],
-            "BEAWAR": [
-                "BW01 GVUSS JALIYA II", "BW02 GVUSS VIJAYNAGAR", "BW03 GUPSS BARAKHANA", "BW04 GUPSS PALAR",
-                "BW05 GUPSS CHANDKI DHANI", "BW06 GUPSS CHAPANERI", "BW07 GUPSS CHHITARPURA", "BW08 GUPSS DEVALI",
-                "BW09 GUPSS DHARMPURA", "BW10 GUPSS DEWAS", "BW11 GUPSS DHULYA", "BW12 GUPSS JALIYA"
-            ],
-            "BIKANER": [
-                "Bkn 101 GSS BIKANER", "Bkn 102 GSS LALGARH", "Bkn 103 GSS KHARIYA", "Bkn 104 GSS KANASAR",
-                "Bkn 105 GSS MEELAN", "Bkn 106 GSS SURPUR", "Bkn 107 GSS KHARANADI", "Bkn 108 GSS RAWALPURA",
-                "Bkn 109 GSS KHOJLAN", "Bkn 110 GSS KANIYA", "Bkn 111 GSS CHAK 6 HNM", "Bkn 112 GSS DHANI SARERIYA"
-            ],
-            "CHURU": [
-                "CH01 GPRA.SS.BHIMSAR", "CH02 GVUSS BHIMSAR", "CH03 GVUSS RAJPURA", "CH04 GVUSS.NAYAKAN",
-                "CH05 GUPSS GHANTEL", "CH06 GUPSS.GOYALWAS", "CH07 GUPSS.SADANA", "CH08 GPSS BHIMSAR",
-                "CH09 GPSS GHANTEL", "CH10 GPSS SANKHUA TAL", "CH11 GPS JAHANSHAH", "CH12 GPS RAGHUWANSAR"
-            ],
-            "DIDWANA": [
-                "DDW01 GOVT. SENIOR SECONDARY SCHOOL BARAGANA", "DDW02 GOVT. SENIOR SECONDARY SCHOOL DHARAR",
-                "DDW03 GOVT. SENIOR SECONDARY SCHOOL DHIRASAR", "DDW04 GOVT. SENIOR SECONDARY SCHOOL HARIYA",
-                "DDW05 GOVT. SENIOR SECONDARY SCHOOL JASNAGAR", "DDW06 GOVT. SENIOR SECONDARY SCHOOL JILIYA",
-                "DDW07 GOVT. SENIOR SECONDARY SCHOOL KALWANI", "DDW08 GOVT. SENIOR SECONDARY SCHOOL KHAKHOLI",
-                "DDW09 GOVT. SENIOR SECONDARY SCHOOL LADPUR", "DDW10 GOVT. SENIOR SECONDARY SCHOOL MAWASIYA",
-                "DDW11 GOVT. SENIOR SECONDARY SCHOOL SAINWARA"
-            ],
-            "JODHPUR": [
-                "JDR01 GOVT. SENIOR SECONDARY SCHOOL BHANTAWAS", "JDR02 GOVT. SENIOR SECONDARY SCHOOL BHANTAWAS",
-                "JDR03 GOVT. SENIOR SECONDARY SCHOOL GUDHA", "JDR04 GOVT. SENIOR SECONDARY SCHOOL MANDA",
-                "JDR05 GOVT. SENIOR SECONDARY SCHOOL ROOPANADI", "JDR06 GOVT. SENIOR SECONDARY SCHOOL RAMWAS",
-                "JDR07 GOVT. GIRLS SENIOR SECONDARY SCHOOL CHANDANPURA", "JDR08 GOVT. SENIOR SECONDARY SCHOOL KHARI",
-                "JDR09 GOVT. SENIOR SECONDARY SCHOOL KHAIRLIYA", "JDR10 GOVT. SENIOR SECONDARY SCHOOL KHOKHAR"
-            ],
-            "JHUNJHUNU": [
-                "JH01 GPRA.SS ALIASAR", "JH02 GVUSS BANGO THALA", "JH03 GVUSS CHITAWA", "JH04 GVUSS DIDWANA",
-                "JH05 GVUSS NAWALGARH", "JH06 GVUSS PILOD", "JH07 GVUSS KAJRA", "JH08 GVUSS.MHRAMPUR",
-                "JH09 GPRA.SS BADBAR", "JH10 GPRA.SS BISHAU", "JH11 GPRA.SS KHESO KI DHANI", "JH12 GPRA.SS KHETRI",
-                "JH13 GPRA.SS KUMAWAS", "JH14 GPRA.SS LADUNDA", "JH15 GPRA.SS MALIYO KI DHANI", "JH16 GPRA.SS MANDAWA",
-                "JH17 GPRA.SS PUROHITI KI DHANI", "JH18 GPRA.SS SUKHANA JOHAD", "JH19 GPRA.SS SURAJGARH",
-                "JH20 GPRA.SS, BHUKARI KI DHANI", "JH21 GPRA.SS, PARSRAMPURA", "JH22 GPRA.SS. BABAI",
-                "JH23 GPRA.SS.JAMADA JOHDI", "JH24 GPSS BAKRA", "JH25 GUPSS BASAWA", "JH26 GUPSS BERI",
-                "JH27 GUPSS DHANI BURA", "JH28 GUPSS DHANI PALA"
-            ],
-            "KOTPUTLI-BEHROR": [
-                "KOT01 GPRA.SS.KHANPUR", "KOT02 GPRA.SS.SULAWAS", "KOT03 GVUSS BAHADURPUR", "KOT04 GVUSS NANGAL PANDAY",
-                "KOT05 GVUSS.AKBARPUR", "KOT06 GUPSS.DEEPARANWALA", "KOT07 GUPSS.JAGANPURA", "KOT08 GUPSS.CHADWADA",
-                "KOT09 GPSS.KALYANPURA", "KOT10 GUPSS.CHANDERPURA"
-            ],
-            "LADNUN": [
-                "Ldn 101 GOVT SR SEC SCHOOL DHOLIA", "Ldn 102 GOVT SR SEC SCHOOL DHYAWA",
-                "Ldn 103 GOVT GIRLS MIDDLE SCHOOL DHYAWA", "Ldn 104 GOVT MIDDLE SCHOOL AAS KI DHANI",
-                "Ldn 105 GOVT MIDDLE SCHOOL GIRADHARIPURA", "Ldn 106 GOVT MIDDLE SCHOOL RAMPURIA",
-                "Ldn 107 GOVT SR SEC SCHOOL FIRAWASI", "Ldn 108 GOVT SR SEC SCHOOL GHIRDODA MITHA",
-                "Ldn 109 GOVT MIDDLE SCHOOL GHIRDODA KHARA", "Ldn 110 GOVT MIDDLE SCHOOL RATHIL",
-                "Ldn 111 GOVT PRIMARY SCHOOL DHOLA BHATA", "Ldn 112 GOVT SR SEC SCHOOL INDERPURA",
-                "Ldn 113 GOVT MIDDLE SCHOOL KHINWAJ", "Ldn 114 GOVT SR SEC SCHOOL JAISALAN",
-                "Ldn 115 GOVT SANSKRIT MIDDLE SCHOOL JAISALAN", "Ldn 116 GOVT SR SEC SCHOOL KASUMBI",
-                "Ldn 117 GOVT GIRLS SR SEC SCHOOL KASUMBI ALIPUR", "Ldn 118 GOVT GIRLS MIDDLE SCHOOL KASUMBI UPADRA",
-                "Ldn 119 GSUP SCHOOL KASUMBI JAKHLA", "Ldn 120 GOVT PRIMARY SCHOOL KASUMBI JAKHLA",
-                "Ldn 121 KG AVASIYA GIRLS SCHOOL KASUMBI", "Ldn 122 GOVT SR SEC SCHOOL LACHHARI",
-                "Ldn 123 GOVT GIRLS MIDDLE SCHOOL LACHHARI", "Ldn 124 GOVT MIDDLE SCHOOL HUSAINPURA",
-                "Ldn 125 GOVT MIDDLE SCHOOL HUSAINPURA KI DHANI", "Ldn 126 GPS HUSAINPURA HARIJAN BASTI",
-                "Ldn 127 GOVT MIDDLE SCHOOL DEVRA", "Ldn 128 GOVT PRIMARY SCHOOL KALA KUAN KI DHANI",
-                "Ldn 129 GOVT SR SEC SCHOOL LAIDI", "Ldn 130 GOVT GIRLS MIDDLE SCHOOL LAIDI",
-                "Ldn 131 GOVT SR SEC SCHOOL MITHARI", "Ldn 132 GOVT GIRLS SR SEC SCHOOL MITHARI",
-                "Ldn 133 GOVT MIDDLE SCHOOL TILOTI", "Ldn 134 GOVT PRIMARY SCHOOL DOBARA KA BAS",
-                "Ldn 135 GOVT SR SEC SCHOOL RINGAN", "Ldn 136 GOVT SR SEC SCHOOL RIDMALAS",
-                "Ldn 137 GOVT MIDDLE SCHOOL SAMANA", "Ldn 138 GPS DAGESARI KI DHANI RINGAN",
-                "Ldn 139 GOVT PRIMARY SCHOOL BHAKARON KI DHANI", "Ldn 140 GOVT SR SEC SCHOOL RODU",
-                "Ldn 141 GOVT MIDDLE SCHOOL SHRI KRISHANPURA", "Ldn 142 GOVT GIRLS MIDDLE SCHOOL RODU",
-                "Ldn 143 GOVT PRIMARY SCHOOL BHAMAS", "Ldn 144 GOVT SR SEC SCHOOL SARDI",
-                "Ldn 145 GOVT PRIMARY SCHOOL SARDI KI DHANI", "Ldn 146 GOVT MIDDLE SCHOOL ANESARIA",
-                "Ldn 147 GOVT SR SEC SCHOOL BHIDASARI", "Ldn 148 GOVT SR SEC SCHOOL TANWARA",
-                "Ldn 149 GOVT MIDDLE SCHOOL KUMASIA", "Ldn 150 GOVT MIDDLE SCHOOL LODSAR",
-                "Ldn 151 GOVT PRIMARY SCHOOL TILOKPURA", "Ldn 152 GOVT SR SEC SCHOOL UDARASAR",
-                "Ldn 153 GOVT MIDDLE SCHOOL KUSHALPURA", "Ldn 154 GOVT MIDDLE SCHOOL RAYDHANA NO 1",
-                "Ldn 155 GOVT MIDDLE SCHOOL RAYDHANA NO 2", "Ldn 156 GOVT PRIMARY SCHOOL DHYAWA",
-                "Ldn 157 GOVT PRIMARY SCHOOL GHIRDODA MITHA", "Ldn 158 GOVT SDT GUPSS SCHOOL KASUMBI ALIPUR",
-                "Ldn 159 GOVT UPEER PRIMARY SCHOOL KASUMBI NILIYA", "Ldn 160 GOVT PRIMARY SCHOOL LAIDI",
-                "Ldn 161 GOVT PRIMARY SCHOOL INDRA COLONY RODU", "Ldn 162 GOVT PRIMARY SCHOOL TANWARA",
-                "Ldn 163 VIVEKANANAD GOVT MODAL SCHOOL NIMBI JODHA", "Ldn 164 GOVT ENGLISH MED. SR SEC SCHOOL JASWANTGARH",
-                "Ldn 165 MGM MITHARI", "Ldn 166 GOVT ENGLISH MEDIUM SCHOOL RODU", "Ldn 167 GOVT PS MEGHWALO KI COLONYBALDU",
-                "Ldn 168 GOVT PRIMARY SCHOOL NEW COLONY DHINGSARI", "Ldn 169 GOVT PRIMARY SCHOOL KHAMIYAD",
-                "Ldn 170 GOVT PRIMARY SCHOOL SILANWAD", "Ldn 171 GOVT PRIMARY SCHOOL KHICHARON KI DHANI",
-                "Ldn 172 GOVT PRIMARY SCHOOL RIDMALAS", "Ldn 201 GOVT SR SEC SCHOOL ASOTA", "Ldn 202 GOVT SR SEC SCHOOL KHANPUR",
-                "Ldn 203 GOVT PRIMARY SCHOOL BHIYANI", "Ldn 204 GOVT SR SEC SCHOOL BAKLIA",
-                "Ldn 205 GOVT GIRLS MIDDLE SCHOOL BAKLIA", "Ldn 206 GOVT MIDDLE SCHOOL BADED",
-                "Ldn 207 GOVT SR SEC SCHOOL BALSAMAND", "Ldn 208 GOVT MIDDLE SCHOOL SHYAMPURA",
-                "Ldn 209 GOVT MIDDLE SCHOOL JHEKRIA", "Ldn 210 GOVT PRIMARY SCHOOL INDRA COLONY BALSAMAND",
-                "Ldn 211 GOVT SR SEC SCHOOL BHARNAWA", "Ldn 212 GOVT SR SEC SCHOOL CHANDRAI",
-                "Ldn 213 GOVT MIDDLE SCHOOL MANU", "Ldn 214 GOVT MEDDLE SCHOOL CHUNDASARIA",
-                "Ldn 215 GOVT MIDDLE SCHOOL JHARDIYA", "Ldn 216 GOVT MIDDLE SCHOOL BERAN KI DHANI",
-                "Ldn 217 GOVT PRIMARY SCHOOL PUNIYON KI DHANI TOKI", "Ldn 218 GOVT SR SEC SCHOOL CHHAPPARA",
-                "Ldn 219 GOVT MIDDLE SCHOOL GUNPALIA", "Ldn 220 GOVT MIDDLE SCHOOL SHIMLA",
-                "Ldn 221 GOVT SR SEC SCHOOL DABRI", "Ldn 222 GOVT GIRLS MIDDLE SCHOOL DABRI",
-                "Ldn 223 GOVT SR SEC SCHOOL DUJAR", "Ldn 224 GOVT SR SEC SCHOOL KOYAL",
-                "Ldn 225 GOVT MIDDLE SCHOOL BED", "Ldn 226 GOVT SR SEC SCHOOL HIRAWATI",
-                "Ldn 227 GOVT SR SEC SCHOOL HUDAS", "Ldn 228 GOVT PRIMARY SCHOOL SARLANADI HUDAS",
-                "Ldn 229 GOVT SR SEC SCHOOL JASWANTGARH", "Ldn 230 GOVT GIRLS SR SEC SCHOOL JASWANTGARH",
-                "Ldn 231 GOVT SANSKRIT SEC SCHOOL JASWANTGARH", "Ldn 232 GOVT PRIMARY SCHOOL NO 2 JASWANTGARH",
-                "Ldn 233 GOVT SR SEC SCHOOL MANGALPURA", "Ldn 236 GOVT MIDDLE SCHOOL GAUREDI",
-                "Ldn 237 GOVT PRIMARY SCHOOL CHAKGAUREDI", "Ldn 238 GOVT PRIMARY SCHOOL MEGH KI DHANI GAUREDI",
-                "Ldn 239 GOVT MIDDLE SCHOOL MALASI", "Ldn 240 GOVT SR SEC SCHOOL ODINT",
-                "Ldn 241 GOVT PRIMARY SCHOOL LUKANS", "Ldn 242 GOVT PRIMARY SCHOOL KHOJLAINADI ODINT",
-                "Ldn 243 GOVT SR SEC SCHOOL SANWRAD", "Ldn 244 GOVT GIRLS MIDDLE SCHOOL SANWRAD",
-                "Ldn 245 GOVT PRIMARY SCL RAILWAY STATION SANWRAD", "Ldn 246 GOVT MIDDLE SCHOOL BITHUDA",
-                "Ldn 247 GOVT SR SEC SCHOOL DATAU", "Ldn 248 GOVT MIDDLE SCHOOL MINDASARI",
-                "Ldn 249 GOVT PRIMARY SCHOOL MINDASARI", "Ldn 250 GOVT MIDDLE SCHOOL BADELA",
-                "Ldn 251 GOVT SR SEC SCHOOL SUNARI", "Ldn 252 GOVT SR SEC SCHOOL VISHWANATHPURA",
-                "Ldn 253 GOVT PRIMARY SCHOOL KACHOLIANADI", "Ldn 254 GOVT PRIMARY SCHOOL KASAN",
-                "Ldn 255 GOVT PRIMARY SCHOOL URLAYINADI", "Ldn 256 GOVT PRIMARY BABA KI DHANI HIRAWATI",
-                "Ldn 257 GPS BHOMIYO KA BASS HUDAS", "Ldn 301 GOVT SR SEC SCHOOL BALDU",
-                "Ldn 302 GOVT GIRLS MIDDLE SCHOOL BALDU(ENG MID)", "Ldn 303 GOVT MIDDLE SCHOOL KHOKHARI",
-                "Ldn 304 GOVT PRIMARY SCHOOL SUNARIYANADI BALDU", "Ldn 305 GOVT PRIMARY SCHOOL KHETPALIYANADI BALDU",
-                "Ldn 306 GOVT SR SEC SCHOOL DHINGSARI", "Ldn 307 GOVT SR SEC SCHOOL SANDAS",
-                "Ldn 308 GOVT MIDDLE SCHOOL TIPANI", "Ldn 309 GOVT SR SEC SCHOOL DHUDILA",
-                "Ldn 310 GOVT UPPER PRIMARY SCHOOL DHUDILA KI DHANI", "Ldn 311 GPS PUNIYON KI DHANI DHUDILA",
-                "Ldn 313 GOVT SR SEC SCHOOL GENANA", "Ldn 314 GOVT PRIMARY SCHOOL SILANADI GENANA",
-                "Ldn 315 GOVT MIDDLE SCHOOL SIKARALI", "Ldn 316 GOVT SR SEC SCHOOL KHAMIYAD",
-                "Ldn 317 GOVT MIDDLE SCHOOL TITARI", "Ldn 318 GOVT MIDDLE SCHOOL NANDWAN",
-                "Ldn 319 GOVT JOHARI SR SEC SCHOOL LADNUN", "Ldn 320 GOVT BHUTODIA GIRLS SR SEC SCHOOL LADNUN",
-                "Ldn 321 GOVT KESARDEVI GIRLS SR SEC SCHOOL LADNUN", "Ldn 322 GOVT SEC SCHOOL No 2 LADNUN (ENG MID)",
-                "Ldn 323 GOVT SR SEC SCHOOL HARIJAN BASTI LADNUN", "Ldn 324 GOVT MIDDLE SCHOOL No 4 LADNUN",
-                "Ldn 325 GOVT SANSKRIT MIDDLE SCHOOL LADNUN", "Ldn 326 GOVT MIDDLE SCHOOL BAWRIO KI DHANI LADNUN",
-                "Ldn 327 GOVT MIDDLE SCHOOL No 5 LADNUN", "Ldn 328 GOVT MIDDLE SCHOOL No 9 LADNUN",
-                "Ldn 329 KGB GIRLS SCHOOL LADNUN", "Ldn 330 GOVT SR SEC SCHOOL MALGAON",
-                "Ldn 331 GOVT SR SEC SCHOOL NIMBI JODHA", "Ldn 332 GOVT GIRLS SR SEC SCHOOL NIMBI JODHA",
-                "Ldn 333 GUPS KHICHARON KI DHANI NIMBI JODHA", "Ldn 334 GOVT MIDDLE SCHOOL DHANI No 2 NIMBI JODHA",
-                "Ldn 335 GSUPS SCHOOL BHIDASARON KI DHANI", "Ldn 336 GSUPS PIPALNADI NIMBI JODHA",
-                "Ldn 337 GOVT PRIMARY SCHOOL PADOLAINADI", "Ldn 339 GOVT SR SEC SCHOOL RATAU",
-                "Ldn 340 GOVT GIRLS MIDDLE SCHOOL RATAU (ENG MID)", "Ldn 341 GOVT MIDDLE SCHOOL RATAU KI DHANI",
-                "Ldn 342 GOVT PRIMARY SCHOOL SIYALNADI RATAU", "Ldn 343 GOVT PRIMARY SCHOOL KRISHI FANTA RATAU",
-                "Ldn 344 GOVT SR SEC SCHOOL ROJA", "Ldn 345 GOVT SR SEC SCHOOL SINWA",
-                "Ldn 346 GOVT MIDDLE SCHOOL BIDASARA KI DHANI SINWA", "Ldn 347 GOVT SR SEC SCHOOL SILANWAD",
-                "Ldn 348 GOVT GIRLS MIDDLE SCHOOL SILANWAD", "Ldn 349 GOVT MIDDLE SCHOOL KHANGAR",
-                "Ldn 350 GOVT PRIMARY SCHOOL BIDASARON KI DHANI", "Ldn 351 GOVT PRIMARY SCHOOL DUKIO KI DHANI",
-                "Ldn 358 GOVT PS MEGHWALO KI COLONYBALDU", "Ldn 359 GOVT PRIMARY SCHOOL NEW COLONY DHINGSARI",
-                "Ldn 360 GOVT PRIMARY SCHOOL KHAMIYAD", "Ldn 361 GOVT PRIMARY SCHOOL SILANWAD",
-                "Ldn 362 GOVT PRIMARY SCHOOL KHICHARON KI DHANI", "Ldn 363 VIVEKANANAD GOVT MODAL SCHOOL NIMBI JODHA",
-                "Ldn 364 GOVT PRIMARY SCHOOL RIDMALAS", "Ldn 365 GOVT ENGLISH MED. SR SEC SCHOOL JASWANTGARH",
-                "Ldn 366 MGM MITHARI", "Ldn 367 GOVT ENGLISH MEDIUM SCHOOL RODU"
-            ],
-            "NAGAUR": [
-                "NGR01 GSS KHOKHARI", "NGR02 GSS KHIVSAR", "NGR03 GSS KHEDULI", "NGR04 GSS KHINWSAR",
-                "NGR05 GSS MANGALPUR", "NGR06 GSS BIKANER", "NGR07 GSS BIJADIYA"
-            ],
-            "PALI": [
-                "PAL01 GSS BASS", "PAL02 GSS LONI", "PAL03 GSS BANSEN", "PAL04 GSS BANSEN",
-                "PAL05 GSS BIJAPUR", "PAL06 GSS MUNDARA", "PAL07 GSS MUNDRA"
-            ],
-            "SAJAFFGARH": [
-                "SJR01 GOVT. SENIOR SECONDARY SCHOOL RAMPURA", "SJR02 GOVT. SENIOR SECONDARY SCHOOL KALARWAS",
-                "SJR03 GOVT. SENIOR SECONDARY SCHOOL CHHAPARA", "SJR04 GOVT. SENIOR SECONDARY SCHOOL KHARINADI",
-                "SJR05 GOVT. SENIOR SECONDARY SCHOOL BALUNDA", "SJR06 GOVT. SENIOR SECONDARY SCHOOL DHIRASAR",
-                "SJR07 GOVT. SENIOR SECONDARY SCHOOL SAROTHIA"
-            ],
-            "SALUMBER": [
-                "SLM01 GSS JHUNJHUNU", "SLM02 GSS JHUNJHUNU", "SLM03 GSS KHERIYA", "SLM04 GSS KHANPUR",
-                "SLM05 GSS LADUN", "SLM06 GSS LADUNDA", "SLM07 GSS LADUN", "SLM08 GSS LADUN",
-                "SLM09 GSS LADUN", "SLM10 GSS LADUN"
-            ],
-            "SIKAR": [
-                "Sik 01 GSS RAMPURA", "Sik 02 GSS KOTPUTLI", "Sik 03 GSS BEHROR", "Sik 04 GSS KANPUR",
-                "Sik 05 GSS KANPUR", "Sik 06 GSS KANPUR", "Sik 07 GSS KANPUR", "Sik 08 GSS KANPUR",
-                "Sik 09 GSS KANPUR", "Sik 10 GSS KANPUR"
-            ],
-            "SUJANGARH": [
-                "SJN01 SHRI TULSIRAM RAMNARAYAN GOVT. SENIOR SECONDARY SCHOOL SHOBHASAR (215432)",
-                "SJN02 GOVT. GIRLS SENIOR SECONDARY SCHOOL DAMODAR LAL SARAWAGI SALASAR (215433)",
-                "SJN03 MAHATMA GANDHI GOVT. SCHOOL SALASAR (215435)",
-                "SJN04 GOVT. SENIOR SECONDARY SCHOOL NORANGSAR (215436)",
-                "SJN05 GOVT. SENIOR SECONDARY SCHOOL KHARIYA BADA (215437)",
-                "SJN06 GOVT. SENIOR SECONDARY SCHOOL KHARIYA KANIRAM (215438)",
-                "SJN07 GOVT. SENIOR SECONDARY SCHOOL NYAMA (215439)",
-                "SJN08 GOVT. SENIOR SECONDARY SCHOOL KHURI (215440)",
-                "SJN09 GOVT. SENIOR SECONDARY SCHOOL BAMANIA (215441)",
-                "SJN10 GOVT. SENIOR SECONDARY SCHOOL MALASI (215442)",
-                "SJN11 GOVT. SENIOR SECONDARY SCHOOL TOLIYASAR (215443)",
-                "SJN12 GOVT. SENIOR SECONDARY SCHOOL CHARIYAN (215445)",
-                "SJN13 SHAHID GIRDHARILAL GOVT. SENIOR SECONDARY SCHOOL GUDAWADI (215446)",
-                "SJN14 GOVT. SENIOR SECONDARY SCHOOL BHANGIWAD (215447)",
-                "SJN15 MAHATMA GANDHI GOVT. SCHOOL BHIMSAR (215448)",
-                "SJN16 GOVT. SENIOR SECONDARY SCHOOL PARVATISAR (215449)",
-                "SJN17 GOVT. SENIOR SECONDARY SCHOOL KHODA (215450)",
-                "SJN18 GOVT. SENIOR SECONDARY SCHOOL LODHSAR (215451)",
-                "SJN19 GOVT. SENIOR SECONDARY SCHOOL BOBASAR (215452)",
-                "SJN20 GOVT. SENIOR SECONDARY SCHOOL MALSISAR (215453)",
-                "SJN21 GOVT. SENIOR SECONDARY SCHOOL KOLASAR (215454)",
-                "SJN22 GOVT. SENIOR SECONDARY SCHOOL BADABAR (215455)",
-                "SJN23 GOVT. SENIOR SECONDARY SCHOOL JINRASAR (215456)",
-                "SJN24 GOVT. SENIOR SECONDARY SCHOOL BHANISARIYA TEJ (215457)",
-                "SJN25 GOVT. SENIOR SECONDARY SCHOOL HARASAR (215458)",
-                "SJN26 GOVT. SENIOR SECONDARY SCHOOL ANKHOLYA (215459)",
-                "SJN27 GOVT. SENIOR SECONDARY SCHOOL DUNGRAS AGUNA (215460)",
-                "SJN28 GOVT. SENIOR SECONDARY SCHOOL CHAK RAJIYASAR MITHA (215461)",
-                "SJN29 GOVT. GIRLS SENIOR SECONDARY SCHOOL CHAK RAJIYASAR (215462)",
-                "SJN30 GOVT. SENIOR SECONDARY SCHOOL AABSAR (215463)",
-                "SJN31 GOVT. SENIOR SECONDARY SCHOOL KHALIYA (215464)",
-                "SJN32 GOVT. SENIOR SECONDARY SCHOOL RANDHISAR (215465)",
-                "SJN33 GOVT. SENIOR SECONDARY SCHOOL BOTHIYAWAS (215466)",
-                "SJN34 GOVT. SENIOR SECONDARY SCHOOL GULERIYA (215467)",
-                "SJN35 GOVT. SENIOR SECONDARY SCHOOL DEWANI (215468)",
-                "SJN36 SHRI BEGRAJ RATHI GOVT. SENIOR SECONDARY SCHOOL GOPALPURA (215470)",
-                "SJN37 GOVT. SENIOR SECONDARY SCHOOL CHARLA (215474)",
-                "SJN38 GOVT. SENIOR SECONDARY SCHOOL GANODA (215475)",
-                "SJN39 GOVT. SENIOR SECONDARY SCHOOL BADA (215476)",
-                "SJN40 GOVT. SENIOR SECONDARY SCHOOL KODASAR JATAN (215477)",
-                "SJN41 GOVT. SENIOR SECONDARY SCHOOL JOGALIYA (215478)",
-                "SJN42 GOVT. SENIOR SECONDARY SCHOOL JETASAR SUJANGARH CHURU 331802 (215479)",
-                "SJN43 GOVT. SENIOR SECONDARY SCHOOL JILI (215482)",
-                "SJN44 GOVT. SENIOR SECONDARY SCHOOL SAROTHIA (215483)",
-                "SJN45 GOVT. SENIOR SECONDARY SCHOOL BAGHSARA ATHUNA (215491)",
-                "SJN46 GOVT. SENIOR SECONDARY SCHOOL TELAP (215492)",
-                "SJN47 GOVT. SENIOR SECONDARY SCHOOL BHASHINA (215493)",
-                "SJN48 GOVT. SENIOR SECONDARY SCHOOL BHALERI (215494)",
-                "SJN49 GOVT. SENIOR SECONDARY SCHOOL KANKAD (215495)",
-                "SJN50 GOVT. SENIOR SECONDARY SCHOOL INDRAPURA (215496)",
-                "SJN51 GOVT. SENIOR SECONDARY SCHOOL CHHAPARA",
-                "SJN52 GOVT. GIRLS SENIOR SECONDARY SCHOOL SUJANGARH (215497)",
-                "SJN53 GOVT. SENIOR SECONDARY SCHOOL SUJANGARH (215498)",
-                "SJN54 GOVT. GIRLS MIDDLE SCHOOL SUJANGARH (215499)",
-                "SJN55 GOVT. MIDDLE SCHOOL SUJANGARH (215500)",
-                "SJN56 GOVT. SANSKRIT MIDDLE SCHOOL SUJANGARH (215501)",
-                "SJN57 GOVT. PRIMARY SCHOOL SUJANGARH (215502)",
-                "SJN58 GOVT. PRIMARY SCHOOL SUJANGARH (215503)",
-                "SJN59 GOVT. PRIMARY SCHOOL SUJANGARH (215504)",
-                "SJN60 GOVT. PRIMARY SCHOOL SUJANGARH (215505)",
-                "SJN61 GOVT. PRIMARY SCHOOL SUJANGARH (215506)",
-                "SJN62 GOVT. PRIMARY SCHOOL SUJANGARH (215507)",
-                "SJN63 GOVT. PRIMARY SCHOOL SUJANGARH (215508)",
-                "SJN64 GOVT. PRIMARY SCHOOL SUJANGARH (215509)",
-                "SJN65 GOVT. PRIMARY SCHOOL SUJANGARH (215510)",
-                "SJN66 GOVT. PRIMARY SCHOOL SUJANGARH (215511)",
-                "SJN67 GOVT. PRIMARY SCHOOL SUJANGARH (215512)",
-                "SJN68 GOVT. PRIMARY SCHOOL SUJANGARH (215513)",
-                "SJN69 GOVT. PRIMARY SCHOOL SUJANGARH (215514)",
-                "SJN70 GOVT. PRIMARY SCHOOL SUJANGARH (215515)",
-                "SJN71 GOVT. PRIMARY SCHOOL SUJANGARH (215516)",
-                "SJN72 GOVT. PRIMARY SCHOOL SUJANGARH (215517)",
-                "SJN73 GOVT. PRIMARY SCHOOL SUJANGARH (215518)",
-                "SJN74 GOVT. PRIMARY SCHOOL SUJANGARH (215519)",
-                "SJN75 GOVT. PRIMARY SCHOOL SUJANGARH (215520)",
-                "SJN76 GOVT. PRIMARY SCHOOL SUJANGARH (215521)",
-                "SJN77 GOVT. PRIMARY SCHOOL SUJANGARH (215522)",
-                "SJN78 GOVT. PRIMARY SCHOOL SUJANGARH (215523)",
-                "SJN79 GOVT. PRIMARY SCHOOL SUJANGARH (215524)",
-                "SJN80 GOVT. PRIMARY SCHOOL SUJANGARH (215525)",
-                "SJN81 GOVT. PRIMARY SCHOOL SUJANGARH (215526)",
-                "SJN82 GOVT. PRIMARY SCHOOL SUJANGARH (215527)",
-                "SJN83 GOVT. PRIMARY SCHOOL SUJANGARH (215528)",
-                "SJN84 GOVT. PRIMARY SCHOOL SUJANGARH (215529)",
-                "SJN85 GOVT. PRIMARY SCHOOL SUJANGARH (215530)",
-                "SJN86 GOVT. PRIMARY SCHOOL SUJANGARH (215531)",
-                "SJN87 GOVT. PRIMARY SCHOOL SUJANGARH (215532)",
-                "SJN88 GOVT. PRIMARY SCHOOL SUJANGARH (215533)",
-                "SJN89 GOVT. PRIMARY SCHOOL SUJANGARH (215534)",
-                "SJN90 GOVT. PRIMARY SCHOOL SUJANGARH (215535)",
-                "SJN91 GOVT. PRIMARY SCHOOL SUJANGARH (215536)",
-                "SJN92 GOVT. PRIMARY SCHOOL SUJANGARH (215537)",
-                "SJN93 GOVT. PRIMARY SCHOOL SUJANGARH (215538)",
-                "SJN94 GOVT. PRIMARY SCHOOL SUJANGARH (215539)",
-                "SJN95 GOVT. PRIMARY SCHOOL SUJANGARH (215540)",
-                "SJN96 GOVT. PRIMARY SCHOOL SUJANGARH (215541)",
-                "SJN97 GOVT. PRIMARY SCHOOL SUJANGARH (215542)",
-                "SJN98 GOVT. PRIMARY SCHOOL SUJANGARH (215543)",
-                "SJN99 GOVT. PRIMARY SCHOOL SUJANGARH (215544)",
-                "SJN100 GOVT. PRIMARY SCHOOL SUJANGARH (215545)",
-                "SJN101 GOVT. PRIMARY SCHOOL SUJANGARH (215546)",
-                "SJN102 GOVT. PRIMARY SCHOOL SUJANGARH (215547)",
-                "SJN103 GOVT. PRIMARY SCHOOL SUJANGARH (215548)",
-                "SJN104 GOVT. PRIMARY SCHOOL SUJANGARH (215549)",
-                "SJN105 GOVT. PRIMARY SCHOOL SUJANGARH (215550)",
-                "SJN106 GOVT. PRIMARY SCHOOL SUJANGARH (215551)",
-                "SJN107 GOVT. PRIMARY SCHOOL SUJANGARH (215552)",
-                "SJN108 GOVT. PRIMARY SCHOOL SUJANGARH (215553)",
-                "SJN109 GOVT. PRIMARY SCHOOL SUJANGARH (215554)",
-                "SJN110 GOVT. PRIMARY SCHOOL SUJANGARH (215555)",
-                "SJN111 GOVT. PRIMARY SCHOOL SUJANGARH (215556)",
-                "SJN112 GOVT. PRIMARY SCHOOL SUJANGARH (215557)",
-                "SJN113 GOVT. PRIMARY SCHOOL SUJANGARH (215558)",
-                "SJN114 GOVT. PRIMARY SCHOOL SUJANGARH (215559)",
-                "SJN115 GOVT. PRIMARY SCHOOL SUJANGARH (215560)",
-                "SJN116 GOVT. PRIMARY SCHOOL SUJANGARH (215561)",
-                "SJN117 GOVT. PRIMARY SCHOOL SUJANGARH (215562)",
-                "SJN118 GOVT. PRIMARY SCHOOL SUJANGARH (215563)",
-                "SJN119 GOVT. PRIMARY SCHOOL SUJANGARH (215564)",
-                "SJN120 GOVT. PRIMARY SCHOOL SUJANGARH (215565)",
-                "SJN121 GOVT. PRIMARY SCHOOL SUJANGARH (215566)",
-                "SJN122 GOVT. PRIMARY SCHOOL SUJANGARH (215567)",
-                "SJN123 GOVT. PRIMARY SCHOOL SUJANGARH (215568)",
-                "SJN124 GOVT. PRIMARY SCHOOL SUJANGARH (215569)",
-                "SJN125 GOVT. PRIMARY SCHOOL SUJANGARH (215570)",
-                "SJN126 GOVT. PRIMARY SCHOOL SUJANGARH (215571)",
-                "SJN127 GOVT. PRIMARY SCHOOL SUJANGARH (215572)",
-                "SJN128 GOVT. PRIMARY SCHOOL SUJANGARH (215573)",
-                "SJN129 GOVT. PRIMARY SCHOOL SUJANGARH (215574)",
-                "SJN130 GOVT. PRIMARY SCHOOL SUJANGARH (215575)",
-                "SJN131 GOVT. PRIMARY SCHOOL SUJANGARH (215576)",
-                "SJN132 GOVT. PRIMARY SCHOOL SUJANGARH (215577)",
-                "SJN133 GOVT. PRIMARY SCHOOL SUJANGARH (215578)",
-                "SJN134 GOVT. PRIMARY SCHOOL SUJANGARH (215579)",
-                "SJN135 GOVT. PRIMARY SCHOOL SUJANGARH (215580)",
-                "SJN136 GOVT. PRIMARY SCHOOL SUJANGARH (215581)",
-                "SJN137 GOVT. PRIMARY SCHOOL SUJANGARH (215582)",
-                "SJN138 GOVT. PRIMARY SCHOOL SUJANGARH (215583)",
-                "SJN139 GOVT. PRIMARY SCHOOL SUJANGARH (215584)",
-                "SJN140 GOVT. PRIMARY SCHOOL SUJANGARH (215585)",
-                "SJN141 GOVT. PRIMARY SCHOOL SUJANGARH (215586)",
-                "SJN142 GOVT. PRIMARY SCHOOL SUJANGARH (215587)",
-                "SJN143 GOVT. PRIMARY SCHOOL SUJANGARH (215588)",
-                "SJN144 GOVT. PRIMARY SCHOOL SUJANGARH (215589)",
-                "SJN145 GOVT. PRIMARY SCHOOL SUJANGARH (215590)",
-                "SJN146 GOVT. PRIMARY SCHOOL SUJANGARH (215591)",
-                "SJN147 GOVT. PRIMARY SCHOOL SUJANGARH (215592)",
-                "SJN148 GOVT. PRIMARY SCHOOL SUJANGARH (215593)",
-                "SJN149 GOVT. PRIMARY SCHOOL SUJANGARH (215594)",
-                "SJN150 GOVT. PRIMARY SCHOOL SUJANGARH (215595)",
-                "SJN151 GOVT. PRIMARY SCHOOL SUJANGARH (215596)",
-                "SJN152 GOVT. PRIMARY SCHOOL SUJANGARH (215597)",
-                "SJN153 GOVT. PRIMARY SCHOOL SUJANGARH (215598)",
-                "SJN154 GOVT. PRIMARY SCHOOL SUJANGARH (215599)",
-                "SJN155 GOVT. PRIMARY SCHOOL SUJANGARH (215600)",
-                "SJN156 GOVT. PRIMARY SCHOOL SUJANGARH (215601)",
-                "SJN157 GOVT. PRIMARY SCHOOL SUJANGARH (215602)",
-                "SJN158 GOVT. PRIMARY SCHOOL SUJANGARH (215603)",
-                "SJN159 GOVT. PRIMARY SCHOOL SUJANGARH (215604)",
-                "SJN160 GOVT. PRIMARY SCHOOL SUJANGARH (215605)",
-                "SJN161 GOVT. PRIMARY SCHOOL SUJANGARH (215606)",
-                "SJN162 GOVT. PRIMARY SCHOOL SUJANGARH (215607)",
-                "SJN163 GOVT. PRIMARY SCHOOL SUJANGARH (215608)",
-                "SJN164 GOVT. PRIMARY SCHOOL SUJANGARH (215609)",
-                "SJN165 GOVT. PRIMARY SCHOOL SUJANGARH (215610)",
-                "SJN166 GOVT. PRIMARY SCHOOL SUJANGARH (215611)",
-                "SJN167 GOVT. PRIMARY SCHOOL SUJANGARH (215612)",
-                "SJN168 GOVT. PRIMARY SCHOOL SUJANGARH (215613)",
-                "SJN169 GOVT. PRIMARY SCHOOL SUJANGARH (215614)",
-                "SJN170 GOVT. PRIMARY SCHOOL SUJANGARH (215615)",
-                "SJN171 GOVT. PRIMARY SCHOOL SUJANGARH (215616)",
-                "SJN172 GOVT. PRIMARY SCHOOL SUJANGARH (215617)",
-                "SJN173 GOVT. PRIMARY SCHOOL SUJANGARH (215618)",
-                "SJN174 GOVT. PRIMARY SCHOOL SUJANGARH (215619)",
-                "SJN175 GOVT. PRIMARY SCHOOL SUJANGARH (215620)",
-                "SJN176 GOVT. PRIMARY SCHOOL SUJANGARH (215621)",
-                "SJN177 GOVT. PRIMARY SCHOOL SUJANGARH (215622)",
-                "SJN178 GOVT. PRIMARY SCHOOL SUJANGARH (215623)",
-                "SJN179 GOVT. PRIMARY SCHOOL SUJANGARH (215624)",
-                "SJN180 GOVT. PRIMARY SCHOOL SUJANGARH (215625)",
-                "SJN181 GOVT. PRIMARY SCHOOL SUJANGARH (215626)",
-                "SJN182 GOVT. PRIMARY SCHOOL BILASI (495803)",
-                "SJN183 GOVT. UPPER PRIMARY SCHOOL BILANGA (495815)",
-                "SJN184 GPS BHIMSAR (512988)",
-                "SJN185 MAHATMA GANDHI GOVT. SCHOOL SHOBHASAR (515691)",
-                "SJN186 GOVT. PRIMARY SCHOOL WARD NO 04 CHAPPAR (526846)",
-                "SJN187 GOVT. PRIMARY SCHOOL WARD NO. 34 SUJANGARH (526847)",
-                "SJN188 GOVT. PRIMARY SCHOOL BHIMSAR PYAU (526879)",
-                "SJN189 GOVT. UPPER PRIMARY SCHOOL MURDAKIA (526918)",
-                "SJN190 GOVT. PRIMARY SCHOOL DHANI CHAYLAN, GOPALPURA (529632)",
-                "SJN191 GOVT. PRIMARY SCHOOL CHAK CHARIYA (529633)",
-                "SJN192 GOVT. PRIMARY SCHOOL WARD NO. 10 SUJANGARH (529634)",
-                "SJN193 GOVT. PRIMARY SCHOOL BAGHSARA ATHUNA (532569)"
-            ],
-            "TONK": [
-                "TN01 GVUPSS GALOD", "TN02 GVUSS MEENO KI JHOPADI", "TN03 GVUSS SITARAMPURA", "TN04 GVUSS JALIYA",
-                "TN05 GUPSS CHANDKI DHANI", "TN06 GUPSS CHAPANERI", "TN07 GUPSS CHHITARPURA", "TN08 GUPSS DEVALI",
-                "TN09 GUPSS DHARMPURA", "TN10 GUPSS DEWAS", "TN11 GUPSS DHULYA", "TN12 GUPSS JALIYA"
-            ]
-        }`);
-        
-        // कक्षाओं की सूची।
         const classes = [
-            "नर्सरी", "एलकेजी", "यूकेजी", "कक्षा 1", "कक्षा 2", "कक्षा 3", "कक्षा 4",
-            "कक्षा 5", "कक्षा 6", "कक्षा 7", "कक्षा 8", "कक्षा 9", "कक्षा 10",
-            "कक्षा 11", "कक्षा 12"
-        ];
-        
-        // HTML तत्वों का संदर्भ प्राप्त करें।
-        const locationDropdown = document.getElementById('location');
-        const schoolDropdown = document.getElementById('school');
-        const dataTableBody = document.getElementById('dataTableBody');
-        const form = document.getElementById('dataEntryForm');
-        const messageBox = document.getElementById('messageBox');
-        
-        // फॉर्म फ़ील्ड्स को नाम दें ताकि Apps Script उन्हें पहचान सके।
-        const formFields = [
-            'date', 'srNumber', 'volunteerName', 'mobileNumber', 'workingVolunteers',
-            'location', 'school'
+            'नर्सरी', 'एलकेजी', 'यूकेजी', 'कक्षा 1', 'कक्षा 2', 'कक्षा 3',
+            'कक्षा 4', 'कक्षा 5', 'कक्षा 6', 'कक्षा 7', 'कक्षा 8', 'कक्षा 9',
+            'कक्षा 10', 'कक्षा 11', 'कक्षा 12'
         ];
 
-        // लोकेशन ड्रॉपडाउन को पॉपुलेट करने का फंक्शन।
-        function populateLocationDropdown() {
-            for (const location in locationsAndSchools) {
-                const option = document.createElement('option');
-                option.value = location;
-                option.text = location;
-                locationDropdown.appendChild(option);
-            }
-        }
-        
-        // तालिका बनाने और पॉपुलेट करने का फंक्शन।
-        function createTable() {
-            dataTableBody.innerHTML = '';
-            
-            // प्रत्येक कक्षा के लिए पंक्तियाँ बनाएँ।
-            classes.forEach(cls => {
-                const row = document.createElement('tr');
-                row.className = "hover:bg-gray-50 transition duration-150";
-                row.innerHTML = `
-                    <td class="py-3 px-2 border-r border-gray-200 font-medium">${cls}</td>
-                    <td class="py-3 px-2 border-r border-gray-200">
-                        <input type="number" name="boys-${cls}" data-class="${cls}" data-gender="B" class="input-field border-0 focus:ring-0 focus:outline-none" min="0">
-                    </td>
-                    <td class="py-3 px-2 border-r border-gray-200">
-                        <input type="number" name="girls-${cls}" data-class="${cls}" data-gender="G" class="input-field border-0 focus:ring-0 focus:outline-none" min="0">
-                    </td>
-                    <td class="py-3 px-2">
-                        <input type="number" name="total-${cls}" data-class="${cls}" data-gender="T" class="input-field bg-gray-100 font-bold" min="0" readonly>
-                    </td>
-                `;
-                dataTableBody.appendChild(row);
-            });
+        function updateTotal(className) {
+            const boysId = `boys-${className}`;
+            const girlsId = `girls-${className}`;
+            const totalId = `total-${className}`;
 
-            // ग्रैंड टोटल के लिए अंतिम पंक्ति बनाएँ।
-            const totalRow = document.createElement('tr');
-            totalRow.className = "bg-indigo-50 font-bold text-lg";
-            totalRow.innerHTML = `
-                <td class="py-3 px-2 border-r border-gray-200 text-indigo-800">कुल योग</td>
-                <td class="py-3 px-2 border-r border-gray-200">
-                    <input type="number" name="grandTotalBoys" data-gender="B" id="totalBoys" class="input-field bg-transparent" min="0" readonly>
-                </td>
-                <td class="py-3 px-2 border-r border-gray-200">
-                    <input type="number" name="grandTotalGirls" data-gender="G" id="totalGirls" class="input-field bg-transparent" min="0" readonly>
-                </td>
-                <td class="py-3 px-2">
-                    <input type="number" name="grandTotal" data-gender="T" id="grandTotal" class="input-field bg-transparent" min="0" readonly>
-                </td>
-            `;
-            dataTableBody.appendChild(totalRow);
+            const boys = parseInt(document.getElementById(boysId).value) || 0;
+            const girls = parseInt(document.getElementById(girlsId).value) || 0;
+            
+            document.getElementById(totalId).value = boys + girls;
+            updateGrandTotals();
         }
 
-        // कुल की गणना करने का फंक्शन।
-        function calculateTotals() {
-            let grandTotalBoys = 0;
-            let grandTotalGirls = 0;
+        function updateGrandTotals() {
+            let totalBoys = 0;
+            let totalGirls = 0;
 
-            classes.forEach(cls => {
-                const boysInput = document.querySelector(`input[name="boys-${cls}"]`);
-                const girlsInput = document.querySelector(`input[name="girls-${cls}"]`);
-                const totalInput = document.querySelector(`input[name="total-${cls}"]`);
-
-                const boys = parseInt(boysInput.value) || 0;
-                const girls = parseInt(girlsInput.value) || 0;
-                const total = boys + girls;
-
-                totalInput.value = total;
-                grandTotalBoys += boys;
-                grandTotalGirls += girls;
+            classes.forEach(className => {
+                const boys = parseInt(document.getElementById(`boys-${className}`).value) || 0;
+                const girls = parseInt(document.getElementById(`girls-${className}`).value) || 0;
+                totalBoys += boys;
+                totalGirls += girls;
             });
-
-            const grandTotal = grandTotalBoys + grandTotalGirls;
-
-            document.getElementById('totalBoys').value = grandTotalBoys;
-            document.getElementById('totalGirls').value = grandTotalGirls;
-            document.getElementById('grandTotal').value = grandTotal;
+            
+            document.getElementById('grandTotalBoys').value = totalBoys;
+            document.getElementById('grandTotalGirls').value = totalGirls;
+            document.getElementById('grandTotal').value = totalBoys + totalGirls;
         }
 
-        // लोकेशन ड्रॉपडाउन के लिए इवेंट श्रोता।
-        locationDropdown.addEventListener('change', (e) => {
-            const selectedLocation = e.target.value;
-            const schools = locationsAndSchools[selectedLocation] || [];
-            
-            // स्कूल ड्रॉपडाउन को सक्षम और पॉपुलेट करें।
-            schoolDropdown.innerHTML = '';
-            schoolDropdown.disabled = false;
-            schoolDropdown.classList.remove('bg-gray-100');
-            schoolDropdown.classList.add('bg-white');
-
-            const defaultOption = document.createElement('option');
-            defaultOption.value = "";
-            defaultOption.text = "विद्यालय चुनें";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            schoolDropdown.appendChild(defaultOption);
-
-            schools.forEach(schoolName => {
-                const option = document.createElement('option');
-                option.value = schoolName;
-                option.text = schoolName;
-                schoolDropdown.appendChild(option);
-            });
+        // Initialize totals on page load
+        window.addEventListener('load', () => {
+            classes.forEach(className => updateTotal(className));
         });
-        
-        // गणना को ट्रिगर करने के लिए इनपुट फ़ील्ड के लिए इवेंट श्रोता।
-        dataTableBody.addEventListener('input', (e) => {
-            if (e.target.type === 'number') {
-                calculateTotals();
-            }
-        });
-        
-        // फॉर्म सबमिशन के लिए इवेंट श्रोता।
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // जांचें कि Google Apps Script URL सेट है या नहीं।
-            if (!SCRIPT_URL) {
-                showMessage("कृपया Google Apps Script URL को अपडेट करें।", "bg-red-100 text-red-700");
-                return;
-            }
-
-            // फॉर्म डेटा को इकट्ठा करें
-            const formData = new FormData(form);
-            const data = {};
-            
-            // सामान्य फ़ील्ड्स को जोड़ें
-            formFields.forEach(field => {
-                data[field] = formData.get(field);
-            });
-
-            // कक्षा-वार डेटा को जोड़ें
-            classes.forEach(cls => {
-                data[`boys-${cls}`] = formData.get(`boys-${cls}`) || 0;
-                data[`girls-${cls}`] = formData.get(`girls-${cls}`) || 0;
-                data[`total-${cls}`] = (parseInt(data[`boys-${cls}`]) || 0) + (parseInt(data[`girls-${cls}`]) || 0);
-            });
-
-            // ग्रैंड टोटल जोड़ें
-            data['grandTotalBoys'] = formData.get('grandTotalBoys') || 0;
-            data['grandTotalGirls'] = formData.get('grandTotalGirls') || 0;
-            data['grandTotal'] = (parseInt(data['grandTotalBoys']) || 0) + (parseInt(data['grandTotalGirls']) || 0);
-
-
-            // सबमिशन बटन को डिसेबल करें और लोडिंग टेक्स्ट दिखाएं
-            const submitButton = form.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = 'डेटा सबमिट हो रहा है...';
-            submitButton.classList.add('bg-gray-400');
-            submitButton.classList.remove('hover:bg-indigo-700');
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // CORS को बाईपास करने के लिए आवश्यक है
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams(data)
-                });
-                
-                // चूंकि no-cors मोड में प्रतिक्रिया का स्टेटस कोड नहीं मिलता,
-                // हमें केवल यह मान लेना होगा कि सबमिशन सफल रहा है।
-                showMessage("✅ डेटा सफलतापूर्वक सबमिट कर दिया गया है!", "bg-green-100 text-green-700");
-                form.reset(); // फॉर्म को रीसेट करें
-                createTable(); // तालिका को फिर से बनाएं
-                schoolDropdown.disabled = true;
-                schoolDropdown.classList.add('bg-gray-100');
-            } catch (error) {
-                console.error("Error:", error);
-                showMessage("❌ डेटा सबमिट करने में कोई त्रुटि हुई। कृपया पुनः प्रयास करें।", "bg-red-100 text-red-700");
-            } finally {
-                // सबमिशन के बाद बटन को फिर से सक्षम करें
-                submitButton.disabled = false;
-                submitButton.textContent = 'डेटा सबमिट करें';
-                submitButton.classList.remove('bg-gray-400');
-                submitButton.classList.add('hover:bg-indigo-700');
-            }
-        });
-        
-        function showMessage(text, classes) {
-            messageBox.textContent = text;
-            messageBox.className = `mt-6 p-4 rounded-xl ${classes}`;
-            messageBox.style.display = 'block';
-            // 5 सेकंड बाद संदेश छिपाएँ
-            setTimeout(() => {
-                messageBox.style.display = 'none';
-            }, 5000);
-        }
-
-        // पेज लोड होने पर डेटा और तालिका को प्रारंभ करें।
-        document.addEventListener('DOMContentLoaded', () => {
-            populateLocationDropdown();
-            createTable();
-        });
-
     </script>
 </body>
 </html>

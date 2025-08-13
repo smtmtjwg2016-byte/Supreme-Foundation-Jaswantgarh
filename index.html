@@ -1,520 +1,439 @@
-<index html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>छात्र संख्या फॉर्म</title>
+    <title>नामांकन फार्म 2025-26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .container { max-width: 900px; }
-        .input-group { display: flex; gap: 0.5rem; }
-        .input-group input { text-align: center; }
-        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        @media (min-width: 768px) {
-            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        }
-        .message-box {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #3b82f6, #7c3aed);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
         }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        .heading {
+            background: linear-gradient(to right, #1e40af, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        .heading::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
             left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(to right, #1e40af, #7c3aed);
+            transition: width 0.5s ease;
+        }
+        .heading:hover::after {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+        }
+        .form-input, .form-select, .form-textarea {
+            transition: all 0.3s ease;
+            background: white;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.3);
+            background: #f8fafc;
+        }
+        .form-input:hover, .form-select:hover, .form-textarea:hover {
+            border-color: #3b82f6;
+        }
+        .table-header {
+            background-image: linear-gradient(to right, #1e40af, #7c3aed);
+            color: white;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid #60a5fa;
+            line-height: 1.5;
+            min-width: 120px;
+            max-width: 120px;
+            white-space: nowrap;
+        }
+        .table-cell {
+            padding: 1rem;
+            text-align: center;
+            min-width: 120px;
+            max-width: 120px;
+            white-space: nowrap;
+        }
+        .table-row:nth-child(even) {
+            background: #eff6ff;
+        }
+        .table-row:hover {
+            background: #dbeafe;
+            transition: background 0.3s ease;
+        }
+        .submit-btn {
+            background: linear-gradient(to right, #16a34a, #22c55e);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        .message {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .section-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-image: linear-gradient(to right, #3b82f6, #7c3aed) 1;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans p-4">
-
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="overlay flex items-center justify-center">
-        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div>
-    </div>
-
-    <!-- Message Box -->
-    <div id="messageBox" class="message-box bg-white text-center">
-        <p id="messageText" class="text-lg font-bold mb-4"></p>
-        <button onclick="closeMessageBox()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">बंद करें</button>
-    </div>
-
-    <div class="container mx-auto bg-white shadow-xl rounded-xl p-8 my-8">
-        <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">छात्र संख्या फॉर्म</h1>
-
-        <form id="studentCountForm" action="https://script.google.com/macros/s/AKfycbxfevqAknBhCjLO4EPJ1SbsbyD1raZf8NODHN4uik5ufRQ20OABd-hizpNqIw54k7xM/exec" method="post" class="space-y-6">
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <label for="location" class="block text-sm font-medium text-gray-700 mb-1">स्थान</label>
-                    <input type="text" id="location" name="location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="school" class="block text-sm font-medium text-gray-700 mb-1">विद्यालय का नाम</label>
-                    <input type="text" id="school" name="school" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">दिनांक</label>
-                    <input type="date" id="date" name="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="srNumber" class="block text-sm font-medium text-gray-700 mb-1">एसआर नंबर</label>
-                    <input type="text" id="srNumber" name="srNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="volunteerName" class="block text-sm font-medium text-gray-700 mb-1">स्वयंसेवक का नाम</label>
-                    <input type="text" id="volunteerName" name="volunteerName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="mobileNumber" class="block text-sm font-medium text-gray-700 mb-1">मोबाइल नंबर</label>
-                    <input type="tel" id="mobileNumber" name="mobileNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
-                    <label for="workingVolunteers" class="block text-sm font-medium text-gray-700 mb-1">कार्यरत स्वयंसेवक</label>
-                    <input type="number" id="workingVolunteers" name="workingVolunteers" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" min="0" required>
-                </div>
+<body>
+    <div class="container mx-auto p-8 max-w-4xl">
+        <div class="text-center mb-10">
+            <div class="heading">
+                <h1>सुप्रीम फाउण्डेशन जसवन्तगढ</h1>
+                <h2 class="mt-2">नामांकन फार्म 2025-26</h2>
             </div>
-
-            <hr class="my-6 border-gray-300">
-
-            <div class="space-y-4">
-                <h2 class="text-2xl font-bold text-center text-indigo-600">कक्षा के अनुसार छात्र संख्या</h2>
-                
-                <div class="grid gap-4">
-                    <!-- Class Nursery -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">नर्सरी</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-नर्सरी" name="boys-नर्सरी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('नर्सरी')">
-                            </div>
-                            <div>
-                                <label for="girls-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-नर्सरी" name="girls-नर्सरी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('नर्सरी')">
-                            </div>
-                            <div>
-                                <label for="total-नर्सरी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-नर्सरी" name="total-नर्सरी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
+        </div>
+        <form id="enrollmentForm" class="space-y-10">
+            <!-- Location and School Selection -->
+            <div class="section-card p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label for="location" class="block text-sm font-semibold text-blue-800">लोकेशन</label>
+                        <div class="relative">
+                            <i class="fas fa-map-marker-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <select id="location" name="location" class="form-select mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500 bg-white" required>
+                                <option value="">लोकेशन चुनें</option>
+                            </select>
                         </div>
                     </div>
-                    
-                    <!-- Class LKG -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">एलकेजी</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-एलकेजी" name="boys-एलकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('एलकेजी')">
-                            </div>
-                            <div>
-                                <label for="girls-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-एलकेजी" name="girls-एलकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('एलकेजी')">
-                            </div>
-                            <div>
-                                <label for="total-एलकेजी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-एलकेजी" name="total-एलकेजी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Class UKG -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">यूकेजी</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-यूकेजी" name="boys-यूकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('यूकेजी')">
-                            </div>
-                            <div>
-                                <label for="girls-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-यूकेजी" name="girls-यूकेजी" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('यूकेजी')">
-                            </div>
-                            <div>
-                                <label for="total-यूकेजी" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-यूकेजी" name="total-यूकेजी" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 1 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 1</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 1" name="boys-कक्षा 1" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 1')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 1" name="girls-कक्षा 1" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 1')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 1" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 1" name="total-कक्षा 1" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Class 2 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 2</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 2" name="boys-कक्षा 2" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 2')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 2" name="girls-कक्षा 2" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 2')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 2" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 2" name="total-कक्षा 2" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 3 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 3</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 3" name="boys-कक्षा 3" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 3')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 3" name="girls-कक्षा 3" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 3')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 3" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 3" name="total-कक्षा 3" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 4 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 4</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 4" name="boys-कक्षा 4" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 4')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 4" name="girls-कक्षा 4" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 4')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 4" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 4" name="total-कक्षा 4" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 5 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 5</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 5" name="boys-कक्षा 5" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 5')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 5" name="girls-कक्षा 5" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 5')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 5" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 5" name="total-कक्षा 5" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 6 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 6</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 6" name="boys-कक्षा 6" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 6')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 6" name="girls-कक्षा 6" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 6')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 6" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 6" name="total-कक्षा 6" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 7 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 7</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 7" name="boys-कक्षा 7" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 7')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 7" name="girls-कक्षा 7" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 7')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 7" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 7" name="total-कक्षा 7" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 8 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 8</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 8" name="boys-कक्षा 8" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 8')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 8" name="girls-कक्षा 8" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 8')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 8" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 8" name="total-कक्षा 8" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Class 9 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 9</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 9" name="boys-कक्षा 9" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 9')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 9" name="girls-कक्षा 9" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 9')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 9" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 9" name="total-कक्षा 9" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Class 10 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 10</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 10" name="boys-कक्षा 10" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 10')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 10" name="girls-कक्षा 10" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 10')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 10" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 10" name="total-कक्षा 10" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 11 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 11</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 11" name="boys-कक्षा 11" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 11')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 11" name="girls-कक्षा 11" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 11')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 11" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 11" name="total-कक्षा 11" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Class 12 -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow">
-                        <h3 class="font-bold mb-2">कक्षा 12</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label for="boys-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">लड़के</label>
-                                <input type="number" id="boys-कक्षा 12" name="boys-कक्षा 12" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 12')">
-                            </div>
-                            <div>
-                                <label for="girls-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">लड़कियां</label>
-                                <input type="number" id="girls-कक्षा 12" name="girls-कक्षा 12" class="w-full px-2 py-1 border rounded-lg" value="0" min="0" oninput="updateTotal('कक्षा 12')">
-                            </div>
-                            <div>
-                                <label for="total-कक्षा 12" class="block text-sm font-medium text-gray-700 mb-1">कुल</label>
-                                <input type="number" id="total-कक्षा 12" name="total-कक्षा 12" class="w-full px-2 py-1 border rounded-lg bg-gray-200" value="0" readonly>
-                            </div>
+                    <div class="relative">
+                        <label for="school" class="block text-sm font-semibold text-blue-800">विद्यालय</label>
+                        <div class="relative">
+                            <i class="fas fa-school absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <select id="school" name="school" class="form-select mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500 bg-white" disabled required>
+                                <option value="">पहले लोकेशन चुनें</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <hr class="my-6 border-gray-300">
-
-            <!-- Grand Totals -->
-            <div class="bg-indigo-100 p-6 rounded-lg shadow-inner">
-                <h2 class="text-xl font-bold text-indigo-800 mb-4">कुल योग</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    <div>
-                        <label for="grandTotalBoys" class="block text-sm font-medium text-indigo-700 mb-1">कुल लड़के</label>
-                        <input type="number" id="grandTotalBoys" name="grandTotalBoys" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+            <!-- Volunteer Details -->
+            <div class="section-card p-6">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4">स्वयंसेवक विवरण</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label for="date" class="block text-sm font-semibold text-blue-800">दिनांक</label>
+                        <div class="relative">
+                            <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <input type="date" id="date" name="date" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                        </div>
                     </div>
-                    <div>
-                        <label for="grandTotalGirls" class="block text-sm font-medium text-indigo-700 mb-1">कुल लड़कियाँ</label>
-                        <input type="number" id="grandTotalGirls" name="grandTotalGirls" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+                    <div class="relative">
+                        <label for="srNumber" class="block text-sm font-semibold text-blue-800">एस आर नम्बर</label>
+                        <div class="relative">
+                            <i class="fas fa-id-card absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <input type="text" id="srNumber" name="srNumber" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                        </div>
                     </div>
-                    <div>
-                        <label for="grandTotal" class="block text-sm font-medium text-indigo-700 mb-1">महायोग</label>
-                        <input type="number" id="grandTotal" name="grandTotal" class="w-full px-4 py-2 border rounded-lg bg-indigo-50 font-bold" value="0" readonly>
+                </div>
+                <div class="relative mt-6">
+                    <label for="volunteerName" class="block text-sm font-semibold text-blue-800">स्वयंसेवक का नाम</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                        <input type="text" id="volunteerName" name="volunteerName" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                    </div>
+                </div>
+                <div class="relative mt-6">
+                    <label for="mobile" class="block text-sm font-semibold text-blue-800">मोबाइल नम्बर</label>
+                    <div class="relative">
+                        <i class="fas fa-phone absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                        <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                    </div>
+                </div>
+                <div class="relative mt-6">
+                    <label for="activeVolunteers" class="block text-sm font-semibold text-blue-800">कार्यरत स्वयंसेवकों के नाम</label>
+                    <div class="relative">
+                        <i class="fas fa-users absolute left-3 top-4 text-blue-600"></i>
+                        <textarea id="activeVolunteers" name="activeVolunteers" rows="4" class="form-textarea mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required></textarea>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-center mt-8">
-                <button type="submit" id="submitButton" class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-lg">
-                    सबमिट करें
+            <!-- Data Entry Table -->
+            <div class="section-card p-6">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4">डेटा एंट्री तालिका</h3>
+                <div class="overflow-x-auto">
+                    <table id="dataTable" class="w-full border-collapse">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="table-header p-4 text-center border-2 border-blue-400 min-width-[120px] max-width-[120px] white-space-nowrap">कक्षा</th>
+                                <th class="table-header p-4 text-center border-2 border-blue-400 min-width-[120px] max-width-[120px] white-space-nowrap">लड़के (B)</th>
+                                <th class="table-header p-4 text-center border-2 border-blue-400 min-width-[120px] max-width-[120px] white-space-nowrap">लड़कियाँ (G)</th>
+                                <th class="table-header p-4 text-center border-2 border-blue-400 min-width-[120px] max-width-[120px] white-space-nowrap">कुल (T)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="table-row"></tbody>
+                        <tfoot>
+                            <tr class="bg-blue-100 font-bold">
+                                <td class="p-3 text-center">कुल</td>
+                                <td class="p-3 text-center" id="grandTotalBoys">0</td>
+                                <td class="p-3 text-center" id="grandTotalGirls">0</td>
+                                <td class="p-3 text-center" id="grandTotal">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="submit-btn text-white px-8 py-3 rounded-lg focus:ring-4 focus:ring-green-300">
+                    <i class="fas fa-paper-plane mr-2"></i>सबमिट करें
                 </button>
             </div>
-            
         </form>
+        <div id="message" class="mt-6 text-center hidden text-lg font-medium message p-4 rounded-lg"></div>
     </div>
 
     <script>
+        // Predefined classes
         const classes = [
-            'नर्सरी', 'एलकेजी', 'यूकेजी', 'कक्षा 1', 'कक्षा 2', 'कक्षा 3',
-            'कक्षा 4', 'कक्षा 5', 'कक्षा 6', 'कक्षा 7', 'कक्षा 8', 'कक्षा 9',
-            'कक्षा 10', 'कक्षा 11', 'कक्षा 12'
+            "नर्सरी", "एलकेजी", "यूकेजी",
+            "कक्षा 1", "कक्षा 2", "कक्षा 3", "कक्षा 4", "कक्षा 5",
+            "कक्षा 6", "कक्षा 7", "कक्षा 8", "कक्षा 9", "कक्षा 10",
+            "कक्षा 11", "कक्षा 12"
         ];
 
-        function updateTotal(className) {
-            const boysId = `boys-${className}`;
-            const girlsId = `girls-${className}`;
-            const totalId = `total-${className}`;
+        // Loading and parsing CSV data for locations and schools
+        let schoolData = {};
+        Papa.parse(loadFileData("Location and School.csv"), {
+            header: true,
+            skipEmptyLines: true,
+            transformHeader: header => header.trim().replace(/^"|"$/g, ''),
+            transform: (value, header) => value.trim().replace(/^"|"$/g, ''),
+            complete: function(results) {
+                const locationSelect = document.getElementById('location');
+                const uniqueLocations = [...new Set(results.data.map(row => row["Location"]))];
+                
+                // Populating location dropdown
+                uniqueLocations.forEach(location => {
+                    if (location) {
+                        const option = document.createElement('option');
+                        option.value = location;
+                        option.textContent = location;
+                        locationSelect.appendChild(option);
+                    }
+                });
 
-            const boys = parseInt(document.getElementById(boysId).value) || 0;
-            const girls = parseInt(document.getElementById(girlsId).value) || 0;
-            
-            document.getElementById(totalId).value = boys + girls;
+                // Organizing school data by location
+                results.data.forEach(row => {
+                    const location = row["Location"];
+                    const school = row["School Name"];
+                    if (location && school) {
+                        if (!schoolData[location]) {
+                            schoolData[location] = [];
+                        }
+                        schoolData[location].push(school);
+                    }
+                });
+
+                // Initialize table with predefined classes
+                initializeTable();
+            },
+            error: function(err) {
+                console.error('CSV parsing error:', err);
+                const messageDiv = document.getElementById('message');
+                messageDiv.classList.remove('hidden', 'text-green-600', 'text-red-600', 'bg-green-100', 'bg-red-100');
+                messageDiv.classList.add('text-red-600', 'bg-red-100');
+                messageDiv.textContent = 'CSV डेटा लोड करने में त्रुटि: ' + err.message;
+                initializeTable(); // Fail-safe to load hardcoded classes
+            }
+        });
+
+        // Populating school dropdown based on location
+        document.getElementById('location').addEventListener('change', function() {
+            const schoolSelect = document.getElementById('school');
+            schoolSelect.innerHTML = '<option value="">विद्यालय चुनें</option>';
+            schoolSelect.disabled = false;
+            const location = this.value;
+            if (location && schoolData[location]) {
+                schoolData[location].forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school;
+                    option.textContent = school;
+                    schoolSelect.appendChild(option);
+                });
+            } else {
+                schoolSelect.disabled = true;
+            }
+        });
+
+        // Initialize table with predefined classes
+        function initializeTable() {
+            const tableBody = document.getElementById('tableBody');
+            if (!tableBody) {
+                console.error("Table body not found!");
+                return;
+            }
+            tableBody.innerHTML = '';
+            if (Array.isArray(classes) && classes.length > 0) {
+                classes.forEach(className => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="table-cell">${className}</td>
+                        <td class="table-cell"><input type="number" class="form-input w-full p-2 rounded-lg" placeholder="लड़के" min="0"></td>
+                        <td class="table-cell"><input type="number" class="form-input w-full p-2 rounded-lg" placeholder="लड़कियाँ" min="0"></td>
+                        <td class="table-cell"><input type="number" class="form-input w-full p-2 rounded-lg bg-gray-100" placeholder="कुल" readonly></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                updateTotal();
+            } else {
+                console.error("Classes array is empty or not an array!");
+            }
+        }
+
+        // Update total in table rows and grand totals
+        function updateTotal() {
+            let grandTotalBoys = 0;
+            let grandTotalGirls = 0;
+            const rows = document.querySelectorAll('#tableBody tr');
+            rows.forEach(row => {
+                const boysInput = row.querySelector('.form-input[placeholder="लड़के"]');
+                const girlsInput = row.querySelector('.form-input[placeholder="लड़कियाँ"]');
+                const totalInput = row.querySelector('.form-input[placeholder="कुल"]');
+                boysInput.addEventListener('input', calculateTotal);
+                girlsInput.addEventListener('input', calculateTotal);
+                function calculateTotal() {
+                    const boys = parseInt(boysInput.value) || 0;
+                    const girls = parseInt(girlsInput.value) || 0;
+                    totalInput.value = boys + girls;
+                    updateGrandTotals();
+                }
+            });
             updateGrandTotals();
         }
 
+        // Update grand totals
         function updateGrandTotals() {
-            let totalBoys = 0;
-            let totalGirls = 0;
-
-            classes.forEach(className => {
-                const boys = parseInt(document.getElementById(`boys-${className}`).value) || 0;
-                const girls = parseInt(document.getElementById(`girls-${className}`).value) || 0;
-                totalBoys += boys;
-                totalGirls += girls;
+            let grandTotalBoys = 0;
+            let grandTotalGirls = 0;
+            document.querySelectorAll('#tableBody tr').forEach(row => {
+                const boys = parseInt(row.querySelector('.form-input[placeholder="लड़के"]').value) || 0;
+                const girls = parseInt(row.querySelector('.form-input[placeholder="लड़कियाँ"]').value) || 0;
+                grandTotalBoys += boys;
+                grandTotalGirls += girls;
             });
-            
-            document.getElementById('grandTotalBoys').value = totalBoys;
-            document.getElementById('grandTotalGirls').value = totalGirls;
-            document.getElementById('grandTotal').value = totalBoys + totalGirls;
+            document.getElementById('grandTotalBoys').textContent = grandTotalBoys;
+            document.getElementById('grandTotalGirls').textContent = grandTotalGirls;
+            document.getElementById('grandTotal').textContent = grandTotalBoys + grandTotalGirls;
         }
 
-        function showMessage(message, isSuccess) {
-            const messageBox = document.getElementById('messageBox');
-            const messageText = document.getElementById('messageText');
-            
-            messageText.textContent = message;
-            
-            messageBox.style.display = 'block';
-            messageBox.className = `message-box ${isSuccess ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`;
-            document.getElementById('overlay').style.display = 'block';
-        }
+        // Form submission to Google Sheets
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const tableData = [];
+            document.querySelectorAll('#tableBody tr').forEach(row => {
+                tableData.push({
+                    class: row.cells[0].textContent,
+                    boys: row.querySelector('.form-input[placeholder="लड़के"]').value || 0,
+                    girls: row.querySelector('.form-input[placeholder="लड़कियाँ"]').value || 0,
+                    total: row.querySelector('.form-input[placeholder="कुल"]').value || 0
+                });
+            });
+            const data = {
+                location: formData.get('location'),
+                school: formData.get('school'),
+                date: formData.get('date'),
+                srNumber: formData.get('srNumber'),
+                volunteerName: formData.get('volunteerName'),
+                mobile: formData.get('mobile'),
+                activeVolunteers: formData.get('activeVolunteers'),
+                tableData: tableData,
+                grandTotalBoys: document.getElementById('grandTotalBoys').textContent,
+                grandTotalGirls: document.getElementById('grandTotalGirls').textContent,
+                grandTotal: document.getElementById('grandTotal').textContent
+            };
 
-        function closeMessageBox() {
-            document.getElementById('messageBox').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function showLoading() {
-            document.getElementById('loadingOverlay').style.display = 'flex';
-        }
-
-        function hideLoading() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-        }
-
-        // Initialize totals on page load
-        window.addEventListener('load', () => {
-            classes.forEach(className => updateTotal(className));
-
-            const form = document.getElementById('studentCountForm');
-            const scriptUrl = form.action;
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault(); // फॉर्म को डिफ़ॉल्ट रूप से सबमिट होने से रोकें
-                showLoading();
-
-                const formData = new FormData(form);
-
+            console.log("Sending data:", data);
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxuy2DN6a4jpexyDVjfHFjWEA092LXLtsDIE5Umack72nGYcfQcqXv0BOUqYIpXuebN/exec';
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors'
+            })
+            .then(response => {
+                console.log("Response:", response);
+                return response.text();
+            })
+            .then(text => {
+                console.log("Response text:", text);
                 try {
-                    const response = await fetch(scriptUrl, {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Server returned status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    if (result.status === 'SUCCESS') {
-                        showMessage(result.message, true);
-                        form.reset(); // फॉर्म को रीसेट करें
-                        classes.forEach(className => updateTotal(className)); // योग को शून्य पर रीसेट करें
-                    } else {
-                        throw new Error(result.message || 'Unknown error');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    showMessage(`सबमिशन असफल रहा: ${error.message}`, false);
-                } finally {
-                    hideLoading();
+                    const data = JSON.parse(text);
+                    const messageDiv = document.getElementById('message');
+                    messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600', 'bg-red-100', 'bg-green-100');
+                    messageDiv.classList.add('text-green-600', 'bg-green-100');
+                    messageDiv.textContent = data.message || 'डेटा सफलतापूर्वक सबमिट हो गया!';
+                    this.reset();
+                    document.getElementById('tableBody').innerHTML = '';
+                    document.getElementById('grandTotalBoys').textContent = '0';
+                    document.getElementById('grandTotalGirls').textContent = '0';
+                    document.getElementById('grandTotal').textContent = '0';
+                    initializeTable();
+                } catch (e) {
+                    console.error("Error parsing response:", e);
+                    const messageDiv = document.getElementById('message');
+                    messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600', 'bg-red-100', 'bg-green-100');
+                    messageDiv.classList.add('text-red-600', 'bg-red-100');
+                    messageDiv.textContent = 'डेटा सबमिट करने में त्रुटि: ' + e.message;
                 }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                const messageDiv = document.getElementById('message');
+                messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600', 'bg-red-100', 'bg-green-100');
+                messageDiv.classList.add('text-red-600', 'bg-red-100');
+                messageDiv.textContent = 'डेटा सबमिट करने में त्रुटि: ' + error.message;
             });
         });
     </script>

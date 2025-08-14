@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नामांकन फार्म 2025-26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #3b82f6, #7c3aed);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        .heading {
+            background: linear-gradient(to right, #1e40af, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        .heading::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(to right, #1e40af, #7c3aed);
+            transition: width 0.5s ease;
+        }
+        .heading:hover::after {
+            width: 100%;
+        }
+        .form-input, .form-select, .form-textarea {
+            transition: all 0.3s ease;
+            background: white;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.3);
+            background: #f8fafc;
+        }
+        .form-input:hover, .form-select:hover, .form-textarea:hover {
+            border-color: #3b82f6;
+        }
+        .table-header {
+            background-image: linear-gradient(to right, #1e40af, #7c3aed);
+            color: white;
+            font-weight: 600;
+            font-size: 1.125rem; /* text-lg */
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0.75rem; /* p-3 */
+            border: 2px solid #60a5fa; /* border-2 border-blue-400 */
+            line-height: 1.5;
+            min-width: 0;
+            flex: 1;
+        }
+        .table-row:nth-child(even) {
+            background: #eff6ff;
+        }
+        .table-row:hover {
+            background: #dbeafe;
+            transition: background 0.3s ease;
+        }
+        .submit-btn {
+            background: linear-gradient(to right, #16a34a, #22c55e);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        .message {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .section-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-image: linear-gradient(to right, #3b82f6, #7c3aed) 1;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-8 max-w-4xl">
+        <div class="text-center mb-10">
+            <div class="heading">
+                <h1>सुप्रीम फाउण्डेशन जसवन्तगढ</h1>
+                <h2 class="mt-2">नामांकन फार्म 2025-26</h2>
+            </div>
+        </div>
+        <form id="enrollmentForm" class="space-y-10">
+            <!-- Location and School Selection -->
+            <div class="section-card p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label for="location" class="block text-sm font-semibold text-blue-800">लोकेशन</label>
+                        <div class="relative">
+                            <i class="fas fa-map-marker-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <select id="location" name="location" class="form-select mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500 bg-white" required>
+                                <option value="">लोकेशन चुनें</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <label for="school" class="block text-sm font-semibold text-blue-800">विद्यालय</label>
+                        <div class="relative">
+                            <i class="fas fa-school absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <select id="school" name="school" class="form-select mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500 bg-white" disabled required>
+                                <option value="">पहले लोकेशन चुनें</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Details -->
+            <div class="section-card p-6">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4">स्वयंसेवक विवरण</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <label for="date" class="block text-sm font-semibold text-blue-800">दिनांक</label>
+                        <div class="relative">
+                            <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <input type="date" id="date" name="date" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <label for="srNumber" class="block text-sm font-semibold text-blue-800">एस आर नम्बर</label>
+                        <div class="relative">
+                            <i class="fas fa-id-card absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                            <input type="text" id="srNumber" name="srNumber" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative mt-6">
+                    <label for="volunteerName" class="block text-sm font-semibold text-blue-800">स्वयंसेवक का नाम</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                        <input type="text" id="volunteerName" name="volunteerName" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                    </div>
+                </div>
+                <div class="relative mt-6">
+                    <label for="mobile" class="block text-sm font-semibold text-blue-800">मोबाइल नम्बर</label>
+                    <div class="relative">
+                        <i class="fas fa-phone absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+                        <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" class="form-input mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required>
+                    </div>
+                </div>
+                <div class="relative mt-6">
+                    <label for="activeVolunteers" class="block text-sm font-semibold text-blue-800">कार्यरत स्वयंसेवकों के नाम</label>
+                    <div class="relative">
+                        <i class="fas fa-users absolute left-3 top-4 text-blue-600"></i>
+                        <textarea id="activeVolunteers" name="activeVolunteers" rows="4" class="form-textarea mt-1 block w-full pl-10 p-3 rounded-lg focus:ring-purple-500 focus:border-purple-500" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Entry Table -->
+            <div class="section-card p-6">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4">डेटा एंट्री तालिका</h3>
+                <div class="overflow-x-auto">
+                    <table id="dataTable" class="w-full border-collapse">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="table-header p-3 text-center border-2 border-blue-400 flex-1 min-w-[100px]">कक्षा</th>
+                                <th class="table-header p-3 text-center border-2 border-blue-400 flex-1 min-w-[100px]">लड़के (B)</th>
+                                <th class="table-header p-3 text-center border-2 border-blue-400 flex-1 min-w-[100px]">लड़कियाँ (G)</th>
+                                <th class="table-header p-3 text-center border-2 border-blue-400 flex-1 min-w-[100px]">कुल (T)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="table-row"></tbody>
+                        <tfoot>
+                            <tr class="bg-blue-100 font-bold">
+                                <td class="p-3 text-center">कुल</td>
+                                <td class="p-3 text-center" id="grandTotalBoys">0</td>
+                                <td class="p-3 text-center" id="grandTotalGirls">0</td>
+                                <td class="p-3 text-center" id="grandTotal">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="submit-btn text-white px-8 py-3 rounded-lg focus:ring-4 focus:ring-green-300">
+                    <i class="fas fa-paper-plane mr-2"></i>सबमिट करें
+                </button>
+            </div>
+        </form>
+        <div id="message" class="mt-6 text-center hidden text-lg font-medium message p-4 rounded-lg"></div>
+    </div>
+
+    <script>
+        // Predefined classes
+        const classes = [
+            "नर्सरी", "एलकेजी", "यूकेजी", 
+            "कक्षा 1", "कक्षा 2", "कक्षा 3", "कक्षा 4", "कक्षा 5", 
+            "कक्षा 6", "कक्षा 7", "कक्षा 8", "कक्षा 9", "कक्षा 10", 
+            "कक्षा 11", "कक्षा 12"
+        ];
+
+        // Loading and parsing CSV data for locations and schools
+        let schoolData = {};
+        Papa.parse(loadFileData("Location and School.csv"), {
+            header: true,
+            skipEmptyLines: true,
+            transformHeader: header => header.trim().replace(/^"|"$/g, ''),
+            transform: (value, header) => value.trim().replace(/^"|"$/g, ''),
+            complete: function(results) {
+                const locationSelect = document.getElementById('location');
+                const uniqueLocations = [...new Set(results.data.map(row => row["Location"]))];
+                
+                // Populating location dropdown
+                uniqueLocations.forEach(location => {
+                    if (location) {
+                        const option = document.createElement('option');
+                        option.value = location;
+                        option.textContent = location;
+                        locationSelect.appendChild(option);
+                    }
+                });
+
+                // Organizing school data by location
+                results.data.forEach(row => {
+                    const location = row["Location"];
+                    const school = row["School Name"];
+                    if (location && school) {
+                        if (!schoolData[location]) {
+                            schoolData[location] = [];
+                        }
+                        schoolData[location].push(school);
+                    }
+                });
+
+                // Initialize table with predefined classes
+                initializeTable();
+            },
+            error: function(err) {
+                console.error('CSV parsing error:', err);
+                const messageDiv = document.getElementById('message');
+                messageDiv.classList.remove('hidden', 'text-green-600', 'text-red-600', 'bg-green-100', 'bg-red-100');
+                messageDiv.classList.add('text-red-600', 'bg-red-100');
+                messageDiv.textContent = 'CSV डेटा लोड करने में त्रुटि: ' + err.message;
+            }
+        });
+
+        // Populating school dropdown based on location
+        document.getElementById('location').addEventListener('change', function() {
+            const schoolSelect = document.getElementById('school');
+            schoolSelect.innerHTML = '<option value="">विद्यालय चुनें</option>';
+            schoolSelect.disabled = false;
+            const location = this.value;
+            if (location && schoolData[location]) {
+                schoolData[location].forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school;
+                    option.textContent = school;
+                    schoolSelect.appendChild(option);
+                });
+            } else {
+                schoolSelect.disabled = true;
+            }
+        });
+
+        // Initialize table with predefined classes
+        function initializeTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            classes.forEach(className => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="p-3 text-center">${className}</td>
+                    <td class="p-3">
+                        <input type="number" class="form-input w-full p-2 rounded-lg" placeholder="लड़के" min="0">
+                    </td>
+                    <td class="p-3">
+                        <input type="number" class="form-input w-full p-2 rounded-lg" placeholder="लड़कियाँ" min="0">
+                    </td>
+                    <td class="p-3">
+                        <input type="number" class="form-input w-full p-2 rounded-lg bg-gray-100" placeholder="कुल" readonly>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            updateTotal();
+        }
+
+        // Update total in table rows and grand totals
+        function updateTotal() {
+            let grandTotalBoys = 0;
+            let grandTotalGirls = 0;
+            const rows = document.querySelectorAll('#tableBody tr');
+            rows.forEach(row => {
+                const boysInput = row.querySelector('.form-input[placeholder="लड़के"]');
+                const girlsInput = row.querySelector('.form-input[placeholder="लड़कियाँ"]');
+                const totalInput = row.querySelector('.form-input[placeholder="कुल"]');
+                boysInput.addEventListener('input', calculateTotal);
+                girlsInput.addEventListener('input', calculateTotal);
+                function calculateTotal() {
+                    const boys = parseInt(boysInput.value) || 0;
+                    const girls = parseInt(girlsInput.value) || 0;
+                    totalInput.value = boys + girls;
+                    updateGrandTotals();
+                }
+            });
+            updateGrandTotals();
+        }
+
+        // Update grand totals
+        function updateGrandTotals() {
+            let grandTotalBoys = 0;
+            let grandTotalGirls = 0;
+            document.querySelectorAll('#tableBody tr').forEach(row => {
+                const boys = parseInt(row.querySelector('.form-input[placeholder="लड़के"]').value) || 0;
+                const girls = parseInt(row.querySelector('.form-input[placeholder="लड़कियाँ"]').value) || 0;
+                grandTotalBoys += boys;
+                grandTotalGirls += girls;
+            });
+            document.getElementById('grandTotalBoys').textContent = grandTotalBoys;
+            document.getElementById('grandTotalGirls').textContent = grandTotalGirls;
+            document.getElementById('grandTotal').textContent = grandTotalBoys + grandTotalGirls;
+        }
+
+        // Form submission to Google Sheets
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const tableData = [];
+            document.querySelectorAll('#tableBody tr').forEach(row => {
+                tableData.push({
+                    class: row.cells[0].textContent,
+                    boys: row.querySelector('.form-input[placeholder="लड़के"]').value || 0,
+                    girls: row.querySelector('.form-input[placeholder="लड़कियाँ"]').value || 0,
+                    total: row.querySelector('.form-input[placeholder="कुल"]').value || 0
+                });
+            });
+            const data = {
+                location: formData.get('location'),
+                school: formData.get('school'),
+                date: formData.get('date'),
+                srNumber: formData.get('srNumber'),
+                volunteerName: formData.get('volunteerName'),
+                mobile: formData.get('mobile'),
+                activeVolunteers: formData.get('activeVolunteers'),
+                tableData: tableData,
+                grandTotalBoys: document.getElementById('grandTotalBoys').textContent,
+                grandTotalGirls: document.getElementById('grandTotalGirls').textContent,
+                grandTotal: document.getElementById('grandTotal').textContent
+            };
+
+            // Replace with your Google Apps Script Web App URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxfIYxA62-HE79KYRIdwKitwZ-gBYbfbIIfkgoJzK0Uk_hcUGjUUpniiTR4LMPBgva2/exec';
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const messageDiv = document.getElementById('message');
+                messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600', 'bg-red-100', 'bg-green-100');
+                messageDiv.classList.add('text-green-600', 'bg-green-100');
+                messageDiv.textContent = data.message || 'डेटा सफलतापूर्वक सबमिट हो गया!';
+                this.reset();
+                document.getElementById('tableBody').innerHTML = '';
+                document.getElementById('grandTotalBoys').textContent = '0';
+                document.getElementById('grandTotalGirls').textContent = '0';
+                document.getElementById('grandTotal').textContent = '0';
+                initializeTable();
+            })
+            .catch(error => {
+                const messageDiv = document.getElementById('message');
+                messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600', 'bg-red-100', 'bg-green-100');
+                messageDiv.classList.add('text-red-600', 'bg-red-100');
+                messageDiv.textContent = 'डेटा सबमिट करने में त्रुटि: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
